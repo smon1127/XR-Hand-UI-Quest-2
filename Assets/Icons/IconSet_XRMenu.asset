@@ -1,0 +1,250 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb41c8335e2ca96449f3991db5fa5702, type: 3}
+  m_Name: IconSet_XRMenu
+  m_EditorClassIdentifier: 
+  quadIcons: []
+  spriteIcons:
+  - {fileID: 21300000, guid: 20f25674b9512834f88938d45ed495d7, type: 3}
+  - {fileID: 21300002, guid: 20f25674b9512834f88938d45ed495d7, type: 3}
+  - {fileID: 21300022, guid: 20f25674b9512834f88938d45ed495d7, type: 3}
+  - {fileID: 21300004, guid: 20f25674b9512834f88938d45ed495d7, type: 3}
+  - {fileID: 21300006, guid: 20f25674b9512834f88938d45ed495d7, type: 3}
+  - {fileID: 21300008, guid: 20f25674b9512834f88938d45ed495d7, type: 3}
+  - {fileID: 21300010, guid: 20f25674b9512834f88938d45ed495d7, type: 3}
+  - {fileID: 21300012, guid: 20f25674b9512834f88938d45ed495d7, type: 3}
+  - {fileID: 21300014, guid: 20f25674b9512834f88938d45ed495d7, type: 3}
+  - {fileID: 21300016, guid: 20f25674b9512834f88938d45ed495d7, type: 3}
+  - {fileID: 21300018, guid: 20f25674b9512834f88938d45ed495d7, type: 3}
+  - {fileID: 21300020, guid: 20f25674b9512834f88938d45ed495d7, type: 3}
+  charIconFont: {fileID: 11400000, guid: 1dc4846aaf857c1479859227d2096edc, type: 2}
+  charIcons:
+  - Name: Icon 1
+    Character: 59648
+  - Name: Icon 2
+    Character: 59649
+  - Name: Icon 3
+    Character: 59650
+  - Name: Icon 4
+    Character: 59651
+  - Name: Icon 5
+    Character: 59652
+  - Name: Icon 6
+    Character: 59653
+  - Name: Icon 7
+    Character: 59654
+  - Name: Icon 8
+    Character: 59655
+  - Name: Icon 9
+    Character: 59656
+  - Name: Icon 10
+    Character: 59657
+  - Name: Icon 11
+    Character: 59658
+  - Name: Icon 12
+    Character: 59659
+  - Name: Icon 13
+    Character: 59660
+  - Name: Icon 14
+    Character: 59661
+  - Name: Icon 15
+    Character: 59662
+  - Name: Icon 16
+    Character: 59663
+  - Name: Icon 17
+    Character: 59664
+  - Name: Icon 18
+    Character: 59665
+  - Name: Icon 19
+    Character: 59666
+  - Name: Icon 20
+    Character: 59667
+  - Name: Icon 21
+    Character: 59668
+  - Name: Icon 23
+    Character: 59670
+  - Name: Icon 24
+    Character: 59671
+  - Name: Icon 25
+    Character: 59672
+  - Name: Icon 26
+    Character: 59673
+  - Name: Icon 27
+    Character: 59674
+  - Name: Icon 28
+    Character: 59675
+  - Name: Icon 29
+    Character: 59676
+  - Name: Icon 30
+    Character: 59677
+  - Name: Icon 31
+    Character: 59678
+  - Name: Icon 32
+    Character: 59679
+  - Name: Icon 33
+    Character: 59680
+  - Name: Icon 34
+    Character: 59681
+  - Name: Icon 35
+    Character: 59682
+  - Name: Icon 36
+    Character: 59683
+  - Name: Icon 37
+    Character: 59684
+  - Name: Icon 38
+    Character: 59685
+  - Name: Icon 39
+    Character: 59686
+  - Name: Icon 40
+    Character: 59687
+  - Name: Icon 41
+    Character: 59688
+  - Name: Icon 42
+    Character: 59689
+  - Name: Icon 43
+    Character: 59690
+  - Name: Icon 44
+    Character: 59691
+  - Name: Icon 45
+    Character: 59692
+  - Name: Icon 46
+    Character: 59693
+  - Name: Icon 47
+    Character: 59694
+  - Name: Icon 48
+    Character: 59695
+  - Name: Icon 49
+    Character: 59696
+  - Name: Icon 50
+    Character: 59697
+  - Name: Icon 51
+    Character: 59698
+  - Name: Icon 52
+    Character: 59699
+  - Name: Icon 53
+    Character: 59700
+  - Name: Icon 54
+    Character: 59701
+  - Name: Icon 55
+    Character: 59702
+  - Name: Icon 56
+    Character: 59703
+  - Name: Icon 57
+    Character: 59704
+  - Name: Icon 58
+    Character: 59705
+  - Name: Icon 59
+    Character: 59706
+  - Name: Icon 60
+    Character: 59707
+  - Name: Icon 61
+    Character: 59708
+  - Name: Icon 62
+    Character: 59709
+  - Name: Icon 63
+    Character: 59710
+  - Name: Icon 64
+    Character: 59711
+  - Name: Icon 65
+    Character: 59712
+  - Name: Icon 66
+    Character: 59713
+  - Name: Icon 67
+    Character: 59714
+  - Name: Icon 68
+    Character: 59715
+  - Name: Icon 69
+    Character: 59716
+  - Name: Icon 70
+    Character: 59717
+  - Name: Icon 71
+    Character: 59718
+  - Name: Icon 72
+    Character: 59719
+  - Name: Icon 73
+    Character: 59720
+  - Name: Icon 74
+    Character: 59721
+  - Name: Icon 75
+    Character: 59722
+  - Name: Icon 76
+    Character: 59723
+  - Name: Icon 77
+    Character: 59724
+  - Name: Icon 78
+    Character: 59725
+  - Name: Icon 79
+    Character: 59726
+  - Name: Icon 80
+    Character: 59727
+  - Name: Icon 81
+    Character: 59728
+  - Name: Icon 82
+    Character: 59729
+  - Name: Icon 83
+    Character: 59730
+  - Name: Icon 84
+    Character: 59731
+  - Name: Icon 85
+    Character: 59732
+  - Name: Icon 86
+    Character: 59733
+  - Name: Icon 87
+    Character: 59734
+  - Name: Icon 88
+    Character: 59735
+  - Name: Icon 89
+    Character: 59736
+  - Name: Icon 89
+    Character: 59737
+  - Name: Icon 90
+    Character: 59738
+  - Name: Icon 91
+    Character: 59739
+  - Name: Icon 92
+    Character: 59740
+  - Name: Icon 93
+    Character: 59741
+  - Name: Icon 94
+    Character: 59742
+  - Name: Icon 95
+    Character: 59743
+  - Name: Icon 96
+    Character: 59744
+  - Name: Icon 97
+    Character: 59745
+  - Name: Icon 98
+    Character: 59746
+  - Name: Icon 99
+    Character: 59747
+  - Name: Icon 100
+    Character: 59748
+  - Name: Icon 101
+    Character: 59749
+  - Name: Icon 102
+    Character: 59750
+  - Name: Icon 103
+    Character: 59751
+  - Name: Icon 104
+    Character: 59752
+  - Name: Icon 105
+    Character: 59753
+  - Name: Icon 106
+    Character: 59754
+  - Name: Icon 107
+    Character: 59755
+  - Name: Icon 108
+    Character: 59756
+  - Name: Icon 109
+    Character: 59757
+  - Name: Icon 110
+    Character: 59758
