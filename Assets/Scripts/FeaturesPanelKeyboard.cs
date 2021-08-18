@@ -4,19 +4,18 @@
 using Microsoft.MixedReality.Toolkit.Input;
 using Microsoft.MixedReality.Toolkit.UI;
 using Microsoft.MixedReality.Toolkit.Utilities;
-
+using UnityEngine.EventSystems;
 using TMPro;
 using static Microsoft.MixedReality.Toolkit.Experimental.UI.NonNativeKeyboard;
 
 namespace Microsoft.MixedReality.Toolkit.Experimental.UI
 {
-    using System.Collections;
     using UnityEngine;
 
     /// <summary>
     /// Class that initializes the appearance of the features panel according to the toggled states of the associated features
     /// </summary>
-    internal class FeaturesPanelKeyboard : MonoBehaviour
+    public class FeaturesPanelKeyboard : MonoBehaviour
     {
         [SerializeField]
         private Interactable toggleUserId = null;
@@ -35,29 +34,29 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UI
         [SerializeField]
         private Interactable buttonExport = null;
 
-
-
-
-
         public TextMeshPro userIdText;
         public TextMeshPro iterationText;
 
         public int userId = 0;
         public bool inputIsActive = false;
 
+        public bool isRec = false;
+        public bool isAudio = false;
+        public bool isHaptic = false;
 
         public NonNativeKeyboard nonNativeKeyboard;
         public string inputText = "0";
+
+        public EvaluationTimer evaluationTimer;
+        public int iteration = 0;
 
         private void Start()
         {
             userIdText.text = userId.ToString();
         }
 
-
         private void Update()
-        {
-        
+        {        
             if (nonNativeKeyboard.isActiveAndEnabled)
             {
                 inputIsActive = true;
@@ -66,37 +65,25 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UI
                 inputIsActive = false;
             }
 
+            isRec = toggleRec.IsToggled;
+            isAudio = toggleAudio.IsToggled;
+            isHaptic = toggleHaptics.IsToggled;
+
             Debug.Log("visual keyboard: " + inputIsActive);
-            
-
-
             
             if (Input.GetKeyDown(KeyCode.KeypadEnter))
             {
-                if (inputIsActive)
-                {
-                    inputText = nonNativeKeyboard.InputField.text;
-                    userIdText.text = inputText;
-                    userId = int.Parse(inputText);
-                    
-                }
-
-                if (toggleUserId.IsToggled)
-                {
-                    toggleUserId.IsToggled = !toggleUserId.IsToggled;
-                    nonNativeKeyboard.Close();
-                }
-                Debug.Log("inputText: " + inputText);
+                OnSubmit();
             }
 
-            
+            iteration = evaluationTimer.iteration;
+            iterationText.text = iteration.ToString();
 
 
-
-            if ((toggleUserId.IsToggled || Input.GetKeyDown(KeyCode.Keypad1)) && !inputIsActive) {                
+            if (Input.GetKeyDown(KeyCode.Keypad1) && !inputIsActive) {                
                 nonNativeKeyboard.PresentKeyboard("", LayoutType.Symbol);                         
                 toggleUserId.IsToggled = !toggleUserId.IsToggled;
-            }
+            }            
 
             if (Input.GetKeyDown(KeyCode.Keypad2) && !inputIsActive)
             {
@@ -131,6 +118,35 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UI
             if (Input.GetKeyDown(KeyCode.Keypad8) && !inputIsActive)
             {
                 buttonExport.SetInputDown();
+            }
+        }
+        public void OnSubmit()
+        {
+            if (inputIsActive)
+            {
+                inputText = nonNativeKeyboard.InputField.text;
+                userIdText.text = inputText;
+                if (inputText != "")
+                    userId = int.Parse(inputText);
+            }
+
+            if (toggleUserId.IsToggled)
+            {
+                toggleUserId.IsToggled = !toggleUserId.IsToggled;
+                nonNativeKeyboard.Close();
+            }
+            Debug.Log("inputText: " + inputText);
+        }
+
+        public void ToggleUserId()
+        {
+            if (toggleUserId.IsToggled)
+            {
+                nonNativeKeyboard.PresentKeyboard("", LayoutType.Symbol);
+            }
+            else
+            {
+                nonNativeKeyboard.Close();
             }
         }
 

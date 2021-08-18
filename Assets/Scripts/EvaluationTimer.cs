@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 using UnityEngine;
-using UnityEngine.UIElements;
+using Microsoft.MixedReality.Toolkit.Experimental.UI;
 
 public class EvaluationTimer : MonoBehaviour
 {
@@ -9,6 +9,7 @@ public class EvaluationTimer : MonoBehaviour
     public int iteration = 0;
     public int errorCount = 0;
 
+    public FeaturesPanelKeyboard featurePanel;
     public DateTime startTime;
     public DateTime endTime;
     public DateTime firstScrollTime;
@@ -17,10 +18,9 @@ public class EvaluationTimer : MonoBehaviour
     public string data;
 
     public bool isTimer = false;
-    public bool isMeasuring = false;
-    public bool isAudioOn = false;
-    public bool isHapticOn = false;
-    
+    public bool isRec = false;
+    public bool isAudio = false;
+    public bool isHaptic = false;   
 
 
     public string OutputFileName { get; } = "XR_HandUI_Taskperformance";
@@ -34,6 +34,11 @@ public class EvaluationTimer : MonoBehaviour
 
     private void Update()
     {
+        userId = featurePanel.userId;
+        isRec = featurePanel.isRec;
+        isAudio = featurePanel.isAudio;
+        isHaptic = featurePanel.isHaptic;
+
         if (Input.GetKeyDown("space") && !isTimer)
         {
             StartTimer();
@@ -42,13 +47,6 @@ public class EvaluationTimer : MonoBehaviour
         {
             StopTimer();
         }
-       
-
-    }
-
-    public void SetUserId(int id)
-    {
-        userId = id;
     }
 
     public void StartTimer()
@@ -63,6 +61,7 @@ public class EvaluationTimer : MonoBehaviour
         isTimer = false;
         targetReachedTime = DateTime.Now;
         duration = targetReachedTime - firstScrollTime;
+        WriteData();
         //Debug.Log($"{filename}: {data}");
     }
 
@@ -74,9 +73,9 @@ public class EvaluationTimer : MonoBehaviour
 
     public void WriteData()
     {
-        data = String.Format("{0};{1};{2};{3};{4}:{5}:{6};{7};{8};{9};{10};{11};{12};", userId, iteration, firstScrollTime, targetReachedTime, duration.Hours.ToString(), duration.Minutes.ToString(), duration.Seconds.ToString(), isMeasuring.ToString(), isAudioOn.ToString(), isHapticOn.ToString(), errorCount, startTime, endTime);
+        data = String.Format("{0};{1};{2};{3};{4}:{5}:{6};{7};{8};{9};{10};{11};{12};", userId, iteration, firstScrollTime, targetReachedTime, duration.Hours.ToString(), duration.Minutes.ToString(), duration.Seconds.ToString(), isRec.ToString(), isAudio.ToString(), isHaptic.ToString(), errorCount, startTime, endTime);
 
-        var filename = String.Format("{0}.csv", OutputFileName);
+        var filename = String.Format("{0}-{1}.csv", OutputFileName, userId);
         string path = Path.Combine(Application.persistentDataPath, filename);
         TextWriter writer = new StreamWriter(path, true);
         writer.WriteLine(data);
