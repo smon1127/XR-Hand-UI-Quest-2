@@ -1,12 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-using Microsoft.MixedReality.Toolkit.Input;
 using Microsoft.MixedReality.Toolkit.UI;
-using Microsoft.MixedReality.Toolkit.Utilities;
-using UnityEngine.EventSystems;
 using TMPro;
-using static Microsoft.MixedReality.Toolkit.Experimental.UI.NonNativeKeyboard;
+using static Microsoft.MixedReality.Toolkit.Experimental.UI.NonNativeKeyboardCustom;
 
 namespace Microsoft.MixedReality.Toolkit.Experimental.UI
 {
@@ -44,7 +41,7 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UI
         public bool isAudio = false;
         public bool isHaptic = false;
 
-        public NonNativeKeyboard nonNativeKeyboard;
+        public NonNativeKeyboardCustom nonNativeKeyboard;
         public string inputText = "0";
 
         public EvaluationTimer evaluationTimer;
