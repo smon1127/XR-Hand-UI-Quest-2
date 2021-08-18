@@ -42,18 +42,13 @@ public class EvaluationTimer : MonoBehaviour
         {
             StopTimer();
         }
-
+       
 
     }
 
-    void OnKeyDown(KeyDownEvent ev)
+    public void SetUserId(int id)
     {
-        Debug.Log("KeyDown:" + ev.keyCode);
-        Debug.Log("KeyDown:" + ev.character);
-        Debug.Log("KeyDown:" + ev.modifiers);
-
-        if((int)ev.keyCode >= 0 && (int)ev.keyCode < 100)
-            userId = (int)ev.keyCode;
+        userId = id;
     }
 
     public void StartTimer()
