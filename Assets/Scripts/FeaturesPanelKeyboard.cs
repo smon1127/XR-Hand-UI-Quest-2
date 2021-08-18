@@ -42,6 +42,7 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UI
         public bool isHaptic = false;
 
         public NonNativeKeyboardCustom nonNativeKeyboard;
+        public GameObject targetObject;
         public string inputText = "0";
 
         public EvaluationTimer evaluationTimer;
@@ -50,6 +51,7 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UI
         private void Start()
         {
             userIdText.text = userId.ToString();
+            targetObject.SetActive(false);
         }
 
         private void Update()
@@ -57,9 +59,11 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UI
             if (nonNativeKeyboard.isActiveAndEnabled)
             {
                 inputIsActive = true;
+                targetObject.SetActive(false);
             }
             else {
                 inputIsActive = false;
+                targetObject.SetActive(true);
             }
 
             isRec = toggleRec.IsToggled;
