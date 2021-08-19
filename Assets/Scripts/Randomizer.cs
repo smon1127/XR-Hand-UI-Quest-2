@@ -1,7 +1,10 @@
 ﻿namespace Microsoft.MixedReality.Toolkit.Experimental.UI
 {
     using Microsoft.MixedReality.Toolkit.UI;
+    using Microsoft.MixedReality.Toolkit.Utilities;
+    using System.Collections;
     using System.Collections.Generic;
+    using TMPro;
     using UnityEngine;
     using Random = UnityEngine.Random;
 
@@ -18,13 +21,27 @@
         public List<Transform> targetObjectPanel = new List<Transform>();
         private Transform tempGoPanel;
         public ScrollingObjectCollection scrollObjectCollectionPanel;
+        public ScrollingObjectCollection scrollObjectCollection;
+        public Vector3 currentScrollPosition = new Vector3();
+        public Vector3 targetScrollPosition = new Vector3();
+        public EvaluationTimer evaluationTimer;
+        public MeshRenderer selectBoxQuadMesh;
+        public Color selectionCorrectColor = new Vector4(0, 0, 0, 1f);
+        public Color selectionIncorrectColor = new Vector4(0, 0, 0, 1f);
+        private Color selectionIdleColor = new Vector4();
+        public TextMeshPro selectText;
+        public float targetThreshold = .1f;
+        private string selectTextIdle = "";
 
         public int currentTargetCount;
 
         void Start()
         {
+            selectTextIdle = selectText.text;
+            selectionIdleColor = selectBoxQuadMesh.material.color;
             DeclareObjectOrder(gridObjectCollection, targetObjectParent, targetObject);
             DeclareObjectOrder(gridObjectCollectionPanel, targetObjectParentPanel, targetObjectPanel);
+            Shuffle();
         }
 
         public void DeclareObjectOrder(Transform _gridObjectCollection, List<Transform> _targetObjectParent, List<Transform> _targetObject)
@@ -40,8 +57,21 @@
 
         private void Update()
         {
+            
+            Debug.Log("cur. scroll: " + currentScrollPosition + "targ. scroll: " + targetScrollPosition);
+
             if (Input.GetKeyDown(KeyCode.Space))
                 Shuffle();
+
+            if (Input.GetKeyDown(KeyCode.KeypadPlus))
+            {
+                scrollObjectCollection.ApplyPosition(targetScrollPosition);
+            }
+            else
+            {
+                currentScrollPosition = scrollObjectCollection.workingScrollerPos;
+            }
+                
         }
 
         public void Shuffle()
@@ -68,9 +98,42 @@
             currentTargetCount = Random.Range(targetObjectParent.Count / 3 * 2, targetObjectParent.Count);
 
             //Scroll to y-Position with targetObject in Panel
-            float cellHeight = scrollObjectCollectionPanel.CellHeight;
-            Vector3 targetScrollPosition = new Vector3(0,currentTargetCount* cellHeight,0);
+            float cellHeight = gridObjectCollectionPanel.GetComponent<GridObjectCollection>().CellHeight;
+            targetScrollPosition = new Vector3(0,currentTargetCount* cellHeight,0);
             scrollObjectCollectionPanel.ApplyPosition(targetScrollPosition);
+        }
+
+        public void SelectTarget()
+        {
+            
+            if (currentScrollPosition.y > targetScrollPosition.y - targetThreshold && currentScrollPosition.y < targetScrollPosition.y + targetThreshold)
+            {
+                evaluationTimer.StopTimer();                
+                StartCoroutine(VisualFeedbackTargetSelection(true));
+            }else
+            {
+                
+                StartCoroutine(VisualFeedbackTargetSelection(false));
+            }
+        }
+
+        IEnumerator VisualFeedbackTargetSelection(bool isRight)
+        {
+            
+            if (isRight)
+            {
+                selectText.text = "Right";
+                selectBoxQuadMesh.material.SetColor("_Color", selectionCorrectColor);
+            }else
+            {
+                selectText.text = "Wrong";
+                selectBoxQuadMesh.material.SetColor("_Color", selectionIncorrectColor);
+            }
+
+            yield return new WaitForSeconds(0.5f);
+            selectText.text = selectTextIdle;
+            selectBoxQuadMesh.material.SetColor("_Color", selectionIdleColor);
+
         }
     }
 }

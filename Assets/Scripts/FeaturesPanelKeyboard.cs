@@ -7,6 +7,7 @@ using static Microsoft.MixedReality.Toolkit.Experimental.UI.NonNativeKeyboardCus
 
 namespace Microsoft.MixedReality.Toolkit.Experimental.UI
 {
+    using Microsoft.MixedReality.Toolkit.Input;
     using UnityEngine;
 
     /// <summary>
@@ -23,13 +24,16 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UI
         [SerializeField]
         private Interactable toggleHaptics = null;
         [SerializeField]
-        private Interactable buttonNext = null;
+        private Interactable togglePassthrough = null;
         [SerializeField]
         private Interactable buttonIteration = null;
         [SerializeField]
         private Interactable toggleScores = null;
         [SerializeField]
         private Interactable buttonExport = null;
+
+        [SerializeField]
+        private Interactable buttonShuffle = null;
 
         public TextMeshPro userIdText;
         public TextMeshPro iterationText;
@@ -48,20 +52,73 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UI
         public EvaluationTimer evaluationTimer;
         public int iteration = 0;
 
+        public ArmUiHandler armUiHandler = null;
+        public GameObject environment = null;
+
+        private GameObject localAvatar = null;
+        private GameObject cameraRig = null;
+        private OVRPassthroughLayer passthroughLayer = null;
+        public OVROverlay.OverlayType AROverlay = OVROverlay.OverlayType.Overlay;
+        public OVROverlay.OverlayType VRUnderlay = OVROverlay.OverlayType.Underlay;
+
         private void Start()
         {
+            localAvatar = GameObject.Find("MRTK-Quest_LocalAvatar(Clone)");
+            cameraRig = GameObject.Find("MRTK-Quest_OVRCameraRig(Clone)");
+            passthroughLayer = cameraRig.GetComponent<OVRPassthroughLayer>();
+
+
             userIdText.text = userId.ToString();
             targetObject.SetActive(false);
         }
 
         private void Update()
-        {        
+        {
+
+            MixedRealityInputSystemProfile inputSystemProfile = CoreServices.InputSystem?.InputSystemProfile;
+            if (inputSystemProfile == null)
+            {
+                return;
+            }
+
+            MixedRealityHandTrackingProfile handTrackingProfile = inputSystemProfile.HandTrackingProfile;
+            if (handTrackingProfile != null)
+            {
+                handTrackingProfile.EnableHandMeshVisualization = !togglePassthrough.IsToggled;
+
+            }
+
+            if (togglePassthrough.IsToggled)
+            {
+                //Passthrouh on
+                passthroughLayer.overlayType = AROverlay;
+                passthroughLayer.textureOpacity = .2f;
+                environment.SetActive(false);
+            }
+            else
+            {
+                //Passthrouh off
+                passthroughLayer.overlayType = VRUnderlay;
+                environment.SetActive(true);
+                passthroughLayer.textureOpacity = .2f;
+            }
+
+
+            localAvatar.SetActive(!togglePassthrough.IsToggled);
+            if(armUiHandler != null)
+            {
+                armUiHandler.isHaptic = toggleHaptics.IsToggled;
+                armUiHandler.isAudio = toggleAudio.IsToggled;
+            }
+           
+
             if (nonNativeKeyboard.isActiveAndEnabled)
             {
                 inputIsActive = true;
                 targetObject.SetActive(false);
             }
-            else {
+            else
+            {
                 inputIsActive = false;
                 targetObject.SetActive(true);
             }
@@ -71,7 +128,7 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UI
             isHaptic = toggleHaptics.IsToggled;
 
             Debug.Log("visual keyboard: " + inputIsActive);
-            
+
             if (Input.GetKeyDown(KeyCode.KeypadEnter))
             {
                 OnSubmit();
@@ -81,10 +138,11 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UI
             iterationText.text = iteration.ToString();
 
 
-            if (Input.GetKeyDown(KeyCode.Keypad1) && !inputIsActive) {                
-                nonNativeKeyboard.PresentKeyboard("", LayoutType.Symbol);                         
+            if (Input.GetKeyDown(KeyCode.Keypad1) && !inputIsActive)
+            {
+                nonNativeKeyboard.PresentKeyboard("", LayoutType.Symbol);
                 toggleUserId.IsToggled = !toggleUserId.IsToggled;
-            }            
+            }
 
             if (Input.GetKeyDown(KeyCode.Keypad2) && !inputIsActive)
             {
@@ -103,7 +161,7 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UI
 
             if (Input.GetKeyDown(KeyCode.Keypad5) && !inputIsActive)
             {
-                buttonNext.SetInputDown();
+                togglePassthrough.IsToggled = !togglePassthrough.IsToggled;
             }
 
             if (Input.GetKeyDown(KeyCode.Keypad6) && !inputIsActive)
@@ -120,7 +178,13 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UI
             {
                 buttonExport.SetInputDown();
             }
+
+            if (Input.GetKeyDown(KeyCode.KeypadMinus) && !inputIsActive)
+            {
+                buttonShuffle.TriggerOnClick();
+            }
         }
+
         public void OnSubmit()
         {
             if (inputIsActive)
