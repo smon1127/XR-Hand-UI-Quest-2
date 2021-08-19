@@ -4,30 +4,39 @@ using UnityEngine;
 
 public class Randomizer : MonoBehaviour
 {
+
+    public Transform gridObjectCollection; 
     public List<Transform> targetObjectParent = new List<Transform>();
     public List<Transform> targetObject = new List<Transform>();
-    private Transform tempGO;
-    public Transform gridObjectCollection;
     private Transform tempGo;
 
+    public Transform gridObjectCollectionPanel;
+    public List<Transform> targetObjectParentPanel = new List<Transform>();
+    public List<Transform> targetObjectPanel = new List<Transform>();    
+    private Transform tempGoPanel;
+
     void Start()
-    {        
+    {
+        DeclareObjectOrder(gridObjectCollection, targetObjectParent, targetObject);
+        DeclareObjectOrder(gridObjectCollectionPanel, targetObjectParentPanel, targetObjectPanel);
+    }
+
+    public void DeclareObjectOrder(Transform _gridObjectCollection, List<Transform> _targetObjectParent, List<Transform> _targetObject)
+    {
         int childCount = 0;
-        foreach (Transform child in gridObjectCollection)
+        foreach (Transform child in _gridObjectCollection)
         {
-            targetObjectParent[childCount] = child;
-            targetObject[childCount] = child.GetChild(0);
+            _targetObjectParent[childCount] = child;
+            _targetObject[childCount] = child.GetChild(0);
             childCount++;
-        }  
+        }
     }
 
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space))
             Shuffle();
-    }
-
- 
+    } 
 
     public void Shuffle()
     {
@@ -37,8 +46,19 @@ public class Randomizer : MonoBehaviour
             tempGo = targetObject[rnd];
             targetObject[rnd] = targetObject[i];
             targetObject[i] = tempGo;
+
             targetObject[i].SetParent(targetObjectParent[i]);
             targetObject[i].localPosition = new Vector3(0,0,0);
+
+
+
+            tempGoPanel = targetObjectPanel[rnd];
+            targetObjectPanel[rnd] = targetObjectPanel[i];
+            targetObjectPanel[i] = tempGoPanel;
+
+            targetObjectPanel[i].SetParent(targetObjectParentPanel[i]);
+            targetObjectPanel[i].localPosition = new Vector3(0, 0, 0);
+
         }
     }
 }
