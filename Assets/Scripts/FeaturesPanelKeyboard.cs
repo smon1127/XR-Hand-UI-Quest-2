@@ -166,7 +166,7 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UI
 
             if (Input.GetKeyDown(KeyCode.Keypad6) && !inputIsActive)
             {
-                buttonIteration.SetInputDown();
+                buttonIteration.TriggerOnClick();
             }
 
             if (Input.GetKeyDown(KeyCode.Keypad7) && !inputIsActive)
@@ -176,7 +176,7 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UI
 
             if (Input.GetKeyDown(KeyCode.Keypad8) && !inputIsActive)
             {
-                buttonExport.SetInputDown();
+                buttonExport.TriggerOnClick();
             }
 
             if (Input.GetKeyDown(KeyCode.KeypadMinus) && !inputIsActive)

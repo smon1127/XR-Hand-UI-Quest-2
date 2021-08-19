@@ -51,8 +51,7 @@ public class EvaluationTimer : MonoBehaviour
     public void StartTimer()
     {
         firstScrollTime = DateTime.Now;
-        isTimer = true;
-        iteration++;
+        isTimer = true;        
     }
 
     public void StopTimer()
@@ -60,6 +59,7 @@ public class EvaluationTimer : MonoBehaviour
         isTimer = false;
         targetReachedTime = DateTime.Now;
         duration = targetReachedTime - firstScrollTime;
+        iteration++;
         WriteData();
         //Debug.Log($"{filename}: {data}");
     }
