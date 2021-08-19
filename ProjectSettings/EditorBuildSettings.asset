@@ -6,8 +6,8 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/XRHandMenu9_HL2.unity
-    guid: a178301650b6410489f4f33f5d8fba07
+    path: Assets/Scenes/ScrollingObjectCollection.unity
+    guid: 79a0bb4c0426b7a4099c35eeced52ee4
   m_configObjects:
     Unity.XR.Oculus.Settings: {fileID: 11400000, guid: af7250b1d9856f14d846181a90557904,
       type: 2}

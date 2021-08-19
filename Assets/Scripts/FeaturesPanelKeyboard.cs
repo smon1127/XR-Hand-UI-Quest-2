@@ -23,7 +23,7 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UI
         [SerializeField]
         private Interactable toggleHaptics = null;
         [SerializeField]
-        private Interactable buttonTarget = null;
+        private Interactable buttonNext = null;
         [SerializeField]
         private Interactable buttonIteration = null;
         [SerializeField]
@@ -103,7 +103,7 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UI
 
             if (Input.GetKeyDown(KeyCode.Keypad5) && !inputIsActive)
             {
-                buttonTarget.SetInputDown();
+                buttonNext.SetInputDown();
             }
 
             if (Input.GetKeyDown(KeyCode.Keypad6) && !inputIsActive)
