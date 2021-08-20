@@ -81,7 +81,7 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UI
         public Color scrollArowIsDraggingColor = new Vector4(1, 1, 1, 1);
         public Color scrollArowIdleColor = new Vector4(1, 1, 1, .5f);
         public Color hoverBackplateColor = new Vector4(0,0,0, 1f);
-        public Color idleBackplateColor = new Vector4(0, 0, 0, 1f);
+        private Color idleBackplateColor = new Vector4();
         //public Color armHoverColor = new Vector4(0.3160377f, 0.6499509f, 1, 1);
         //public Color armIdleColor = new Vector4(0, 0, 0, 1);
         public bool debug = false;
@@ -185,6 +185,7 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UI
 
             Debug.Log("----------------------------------- " + Devices.Count.ToString());
 
+            idleBackplateColor = scrollIconBackplateQuad.material.color;
 
             calibrateSpherePosXRight = -calibrateSphere.transform.position.x;
             calibrateSpherePosXLeft = calibrateSphere.transform.position.x;
@@ -262,30 +263,35 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UI
 
             ToggleFeaturePanel();
             calibrateSphere.transform.localScale = new Vector3(sphereSize, sphereSize, sphereSize);
-            
 
-            //Hover (toggle) item on worldScroll
-            int childCountWorld = 0;
-            foreach (Transform childWorld in worldGridObject)
+
+            //Hover (toggle) item on worldScroll with buttons (Do not delete!!!)
+            //int childCountWorld = 0;
+            //foreach (Transform childWorld in worldGridObject)
+            //{
+            //    childCountWorld++;            
+
+            //    if (childCountWorld == (worldScroll.FirstVisibleCellIndex + hoverItemTierPage))
+            //    {
+            //        childWorld.GetComponent<Interactable>().IsToggled = true;
+            //        if (armButtonsPressed)
+            //            childWorld.GetComponent<Interactable>().SetInputDown();
+            //        else
+            //            childWorld.GetComponent<Interactable>().SetInputUp();
+            //    }
+            //    else
+            //    {                    
+            //        childWorld.GetComponent<Interactable>().IsToggled = false;
+            //    }
+            //}
+
+            if (armButtonsPressed)
             {
-                childCountWorld++;            
-
-                if (childCountWorld == (worldScroll.FirstVisibleCellIndex + hoverItemTierPage))
-                {
-                    childWorld.GetComponent<Interactable>().IsToggled = true;
-                    if (armButtonsPressed)
-                        childWorld.GetComponent<Interactable>().SetInputDown();
-                    else
-                        childWorld.GetComponent<Interactable>().SetInputUp();
-                }
-                else
-                {                    
-                    childWorld.GetComponent<Interactable>().IsToggled = false;
-                }
+                toggleFeaturePanel.GetComponent<Randomizer>().SelectTarget();
             }
 
-            
-            IMixedRealityHandJointService handJointService = CoreServices.GetInputSystemDataProvider<IMixedRealityHandJointService>();
+
+                IMixedRealityHandJointService handJointService = CoreServices.GetInputSystemDataProvider<IMixedRealityHandJointService>();
             if (handJointService != null)
               {
 
