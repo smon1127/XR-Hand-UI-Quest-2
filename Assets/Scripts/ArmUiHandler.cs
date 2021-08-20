@@ -21,6 +21,8 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UI
         //+++++++
         //Range Variables 
         //+++++++
+        [Range(1, 5)]
+        public float scrollSpeedFactor = 1;
 
         [Range(-0.01f, 0.03f)]
         public float uiOffsetPositionY = 0.0f;
@@ -81,7 +83,7 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UI
         public Color scrollArowIsDraggingColor = new Vector4(1, 1, 1, 1);
         public Color scrollArowIdleColor = new Vector4(1, 1, 1, .5f);
         public Color hoverBackplateColor = new Vector4(0,0,0, 1f);
-        private Color idleBackplateColor = new Vector4();
+        public Color idleBackplateColor = new Vector4(0, 0, 0, 1f);
         //public Color armHoverColor = new Vector4(0.3160377f, 0.6499509f, 1, 1);
         //public Color armIdleColor = new Vector4(0, 0, 0, 1);
         public bool debug = false;
@@ -93,10 +95,11 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UI
         public bool isHaptic = true;
         public bool isAudio = true;
         public bool isCalibrating = false;
-        public bool toggleFeaturePanelVisibility = true;
+        public bool toggleFeaturePanelVisibility = false;
         public bool armButtonsPressed = false;
         public bool leftHandIsTracked = false;
         public bool rightHandIsTracked = false;
+
         //+++++++
         //Public Variables 
         //+++++++
@@ -108,10 +111,10 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UI
 
         public TextMeshPro scrollIconUpText;
         public TextMeshPro scrollIconDownText;
-        public MeshRenderer scrollIconBackplateQuad;
+        public MeshRenderer scrollBackplateArmQuad;
         public TextMeshPro scrollIconUpText2;
         public TextMeshPro scrollIconDownText2;
-        public MeshRenderer scrollIconBackplateQuad2;
+        public MeshRenderer scrollBackplateWorldQuad;
         public GameObject calibrateSphere;
         public Transform elbow;
         public Transform leftWrist;
@@ -183,9 +186,7 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UI
                 Debug.Log(string.Format("Device found with name '{0}' and role '{1}'", dev.name, dev.isValid.ToString()));
             }
 
-            Debug.Log("----------------------------------- " + Devices.Count.ToString());
-
-            idleBackplateColor = scrollIconBackplateQuad.material.color;
+            Debug.Log("----------------------------------- " + Devices.Count.ToString());        
 
             calibrateSpherePosXRight = -calibrateSphere.transform.position.x;
             calibrateSpherePosXLeft = calibrateSphere.transform.position.x;
@@ -220,7 +221,6 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UI
                 uiOffset.gameObject.SetActive(false);              
                 menuToggle.SetActive(false);
                 firstTime = true;
-
                 isSwitchToggled = true;
                 radialViewAnchor.IsAppActive(false);
             }
@@ -261,7 +261,7 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UI
                 calibrationButton.SetActive(false);
             }
 
-            ToggleFeaturePanel();
+       
             calibrateSphere.transform.localScale = new Vector3(sphereSize, sphereSize, sphereSize);
 
 
@@ -290,8 +290,17 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UI
                 toggleFeaturePanel.GetComponent<Randomizer>().SelectTarget();
             }
 
+            if (toggleFeaturePanelVisibility)
+            {
+                toggleFeaturePanel.SetActive(true);
+            }
+            else
+            {
+                toggleFeaturePanel.SetActive(false);
+            }
 
-                IMixedRealityHandJointService handJointService = CoreServices.GetInputSystemDataProvider<IMixedRealityHandJointService>();
+
+            IMixedRealityHandJointService handJointService = CoreServices.GetInputSystemDataProvider<IMixedRealityHandJointService>();
             if (handJointService != null)
               {
 
@@ -410,18 +419,18 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UI
                 {
                     scrollIconUpText.color = scrollArowIsDraggingColor;
                     scrollIconDownText.color = scrollArowIsDraggingColor;
-                    scrollIconBackplateQuad.material.SetColor("_Color", hoverBackplateColor);
+                    scrollBackplateWorldQuad.material.SetColor("_Color", hoverBackplateColor);
                     scrollIconUpText2.color = scrollArowIsDraggingColor;
                     scrollIconDownText2.color = scrollArowIsDraggingColor;
-                    scrollIconBackplateQuad2.material.SetColor("_Color", hoverBackplateColor);
+                    scrollBackplateWorldQuad.material.SetColor("_Color", hoverBackplateColor);
                 } else
                 {
                     scrollIconUpText.color = scrollArowIdleColor;
                     scrollIconDownText.color = scrollArowIdleColor;
-                    scrollIconBackplateQuad.material.SetColor("_Color", idleBackplateColor);
+                    //scrollBackplateArmQuad.material.SetColor("_Color", idleBackplateColor);
                     scrollIconUpText2.color = scrollArowIdleColor;
                     scrollIconDownText2.color = scrollArowIdleColor;
-                    scrollIconBackplateQuad2.material.SetColor("_Color", idleBackplateColor);
+                    scrollBackplateWorldQuad.material.SetColor("_Color", idleBackplateColor);
                 }
 
                 if (isSwitchToggled)
@@ -533,18 +542,7 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UI
         {
             armButtonsPressed = isPressed;
         }
-
-        public void ToggleFeaturePanel()
-        {
-            if (toggleFeaturePanelVisibility)
-            {
-                toggleFeaturePanel.SetActive(true);
-            }
-            else
-            {
-                toggleFeaturePanel.SetActive(false);
-            }
-        }
+ 
 
         public void FlipToggleScale(bool isUp)
         {
@@ -652,6 +650,12 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UI
             circularButtonInteractable.IsToggled = true;
             radialViewAnchor.IsAppActive(true);
             sphereSize = sphereSizeCalibrate;
+            toggleFeaturePanelVisibility = true;
+            if (firstTime)
+            {
+                toggleFeaturePanel.GetComponent<FeaturesPanelKeyboard>().toggleSettings.IsToggled = true;
+                firstTime = false;
+            }
         }
 
         public void StartCalibration()

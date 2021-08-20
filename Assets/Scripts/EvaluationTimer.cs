@@ -37,10 +37,14 @@ public class EvaluationTimer : MonoBehaviour
 
     private void Update()
     {
-        userId = featurePanel.userId;
-        isRec = featurePanel.isRec;
-        isAudio = featurePanel.isAudio;
-        isHaptic = featurePanel.isHaptic;
+        if (featurePanel.toggleHome.IsToggled)
+        {
+            userId = featurePanel.userId;
+            isRec = featurePanel.isRec;
+            isAudio = featurePanel.isAudio;
+            isHaptic = featurePanel.isHaptic;
+        }
+        
 
         if (Input.GetKeyDown("space")){
             ToggleTimer();

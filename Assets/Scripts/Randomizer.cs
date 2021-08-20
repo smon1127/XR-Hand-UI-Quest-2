@@ -105,16 +105,19 @@
 
         public void SelectTarget()
         {
+         
+                if (currentScrollPosition.y > targetScrollPosition.y - targetThreshold && currentScrollPosition.y < targetScrollPosition.y + targetThreshold)
+                {
+                    evaluationTimer.StopTimer();
+                    StartCoroutine(VisualFeedbackTargetSelection(true));
+                }
+                else
+                {
+
+                    StartCoroutine(VisualFeedbackTargetSelection(false));
+                }
             
-            if (currentScrollPosition.y > targetScrollPosition.y - targetThreshold && currentScrollPosition.y < targetScrollPosition.y + targetThreshold)
-            {
-                evaluationTimer.StopTimer();                
-                StartCoroutine(VisualFeedbackTargetSelection(true));
-            }else
-            {
-                
-                StartCoroutine(VisualFeedbackTargetSelection(false));
-            }
+            
         }
 
         IEnumerator VisualFeedbackTargetSelection(bool isRight)

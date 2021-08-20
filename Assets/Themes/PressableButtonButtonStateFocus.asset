@@ -22,7 +22,7 @@ MonoBehaviour:
       values:
       - Name: 
         String: 
-        Bool: 0
+        Bool: 1
         Int: 0
         Float: 0
         Texture: {fileID: 0}

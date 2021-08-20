@@ -15,25 +15,30 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UI
     /// </summary>
     public class FeaturesPanelKeyboard : MonoBehaviour
     {
-        [SerializeField]
-        private Interactable toggleUserId = null;
-        [SerializeField]
-        private Interactable toggleRec = null;
-        [SerializeField]
-        private Interactable toggleAudio = null;
-        [SerializeField]
-        private Interactable toggleHaptics = null;
-        [SerializeField]
-        private Interactable togglePassthrough = null;
-        [SerializeField]
-        private Interactable buttonIteration = null;
-        [SerializeField]
-        private Interactable toggleScores = null;
-        [SerializeField]
-        private Interactable buttonExport = null;
 
-        [SerializeField]
-        private Interactable buttonShuffle = null;
+        public Interactable toggleUserId = null;
+
+        public Interactable toggleRec = null;
+
+        public Interactable toggleAudio = null;
+
+        public Interactable toggleHaptics = null;
+
+        public Interactable togglePassthrough = null;
+
+        public Interactable buttonIteration = null;
+
+        public Interactable toggleScores = null;
+
+        public Interactable toggleHome = null;
+
+        public Interactable toggleSettings = null;
+
+        public GameObject settingsPanel = null;
+        public GameObject homePanel = null;
+
+
+        public Interactable buttonShuffle = null;
 
         public TextMeshPro userIdText;
         public TextMeshPro iterationText;
@@ -44,6 +49,7 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UI
         public bool isRec = false;
         public bool isAudio = false;
         public bool isHaptic = false;
+        public bool isSetting = true;
 
         public NonNativeKeyboardCustom nonNativeKeyboard;
         public GameObject targetObject;
@@ -54,6 +60,7 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UI
 
         public ArmUiHandler armUiHandler = null;
         public GameObject environment = null;
+        public GameObject anchors = null;
 
         private GameObject localAvatar = null;
         private GameObject cameraRig = null;
@@ -70,6 +77,7 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UI
 
             userIdText.text = userId.ToString();
             targetObject.SetActive(false);
+            gameObject.SetActive(false);
         }
 
         private void Update()
@@ -86,6 +94,15 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UI
             {
                 handTrackingProfile.EnableHandMeshVisualization = !togglePassthrough.IsToggled;
 
+            }
+
+            if (toggleSettings.IsToggled && gameObject.activeInHierarchy)
+            {
+                anchors.SetActive(true);
+            }
+            else
+            {
+                anchors.SetActive(false);
             }
 
             if (togglePassthrough.IsToggled)
@@ -176,12 +193,31 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UI
 
             if (Input.GetKeyDown(KeyCode.Keypad8) && !inputIsActive)
             {
-                buttonExport.TriggerOnClick();
+            
             }
 
             if (Input.GetKeyDown(KeyCode.KeypadMinus) && !inputIsActive)
             {
                 buttonShuffle.TriggerOnClick();
+            }
+        }
+    
+        public void ToggleOptions(int buttonNum)
+        {
+            switch (buttonNum)
+            {
+                //Home active
+                case 1:
+                    homePanel.SetActive(true);
+                    settingsPanel.SetActive(false);
+                    toggleSettings.IsToggled = false;
+                    break;
+                //Settings active
+                case 2:
+                    homePanel.SetActive(false);
+                    settingsPanel.SetActive(true);
+                    toggleHome.IsToggled = false;
+                    break;
             }
         }
 

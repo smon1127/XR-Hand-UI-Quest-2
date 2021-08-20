@@ -16,10 +16,12 @@ namespace Microsoft.MixedReality.Toolkit.Utilities.Solvers
 
         public Transform anchors;
         public Transform anchorSolvers;
+        public Interactable toggleSettings;
         public bool isFollow = false;
         public bool isAppActive = false;
         public bool toggleUi = false;
         public bool anchorTouched = false;
+        public bool tiltedWindow = false;
         public float moveFollowLerpTime = 0.3f;
         public Color isFollowColor = new Vector4(0.14f, 0.21f, 0.63f, 1);
         public Color defaultColor = new Vector4(0, 0, 0, 1);
@@ -295,15 +297,19 @@ namespace Microsoft.MixedReality.Toolkit.Utilities.Solvers
             base.Start();
             solverHandler = gameObject.GetComponent<SolverHandler>();
             coloredObject.GetComponent<MeshRenderer>().material.SetColor("_RimColor", defaultColor);
+            anchors.gameObject.SetActive(false);
         }
 
+       
 
         /// <inheritdoc />
         public override void SolverUpdate()
         {
+          
 
             if (toggleUi)
-            {
+            {              
+
                 //anchorButton.GetComponent<Interactable>().IsToggled = true;
                 gameObject.SetActive(true);
                 anchorSolvers.GetComponent<RadialView>().enabled = false;
@@ -402,6 +408,19 @@ namespace Microsoft.MixedReality.Toolkit.Utilities.Solvers
 
         }
 
+        public void ToggleTiltedWindow() {
+            tiltedWindow = !tiltedWindow;
+
+            if (tiltedWindow)
+            {
+                solverHandler.AdditionalRotation = new Vector3(25,0,0);
+            }
+            else
+            {
+                solverHandler.AdditionalRotation = new Vector3(0, 0, 0);
+            }
+        }
+
 
         public void AnchorTouched(bool isTouching)
         {
@@ -421,7 +440,7 @@ namespace Microsoft.MixedReality.Toolkit.Utilities.Solvers
 
         public void IsAppActive(bool isActive)
         {
-            anchors.gameObject.SetActive(isActive);
+            //anchors.gameObject.SetActive(isActive);
             toggleUi = isActive;            
             
             SolverUpdate();
