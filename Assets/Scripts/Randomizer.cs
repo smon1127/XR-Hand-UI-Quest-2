@@ -32,8 +32,9 @@
         public TextMeshPro selectText;
         public float targetThreshold = .1f;
         private string selectTextIdle = "";
+        public float tempTargetOffset = 0.8f;
 
-        public int currentTargetCount;
+        public int currentTargetIndex;
 
         void Start()
         {
@@ -57,7 +58,7 @@
 
         private void Update()
         {
-            
+
             Debug.Log("cur. scroll: " + currentScrollPosition + "targ. scroll: " + targetScrollPosition);
 
             if (Input.GetKeyDown(KeyCode.Space))
@@ -65,13 +66,17 @@
 
             if (Input.GetKeyDown(KeyCode.KeypadPlus))
             {
-                scrollObjectCollection.ApplyPosition(targetScrollPosition);
+                MoveToTargetIndex();
             }
-            else
-            {
-                currentScrollPosition = scrollObjectCollection.workingScrollerPos;
-            }
+
+            currentScrollPosition = scrollObjectCollection.workingScrollerPos; 
+        }
+
+            public void MoveToTargetIndex()
+        {            
+                scrollObjectCollection.MoveToIndex(currentTargetIndex);          
                 
+            
         }
 
         public void Shuffle()
@@ -95,18 +100,20 @@
                 targetObjectPanel[i].localPosition = new Vector3(0, 0, 0);
             }
             //Define targetObject randomized of last third
-            currentTargetCount = Random.Range(targetObjectParent.Count / 3 * 2, targetObjectParent.Count);
+            currentTargetIndex = Random.Range(targetObjectParent.Count / 3 * 2, targetObjectParent.Count);
 
             //Scroll to y-Position with targetObject in Panel
             float cellHeight = gridObjectCollectionPanel.GetComponent<GridObjectCollection>().CellHeight;
-            targetScrollPosition = new Vector3(0,currentTargetCount* cellHeight,0);
+            targetScrollPosition = new Vector3(0,currentTargetIndex* cellHeight,0);
             scrollObjectCollectionPanel.ApplyPosition(targetScrollPosition);
         }
 
         public void SelectTarget()
         {
-         
-                if (currentScrollPosition.y > targetScrollPosition.y - targetThreshold && currentScrollPosition.y < targetScrollPosition.y + targetThreshold)
+
+       
+
+                if (currentScrollPosition.y > (targetScrollPosition.y + tempTargetOffset - targetThreshold) && currentScrollPosition.y < (targetScrollPosition.y + tempTargetOffset + targetThreshold))
                 {
                     evaluationTimer.StopTimer();
                     StartCoroutine(VisualFeedbackTargetSelection(true));

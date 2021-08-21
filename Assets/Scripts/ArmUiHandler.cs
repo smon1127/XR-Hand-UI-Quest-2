@@ -21,8 +21,6 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UI
         //+++++++
         //Range Variables 
         //+++++++
-        [Range(1, 5)]
-        public float scrollSpeedFactor = 1;
 
         [Range(-0.01f, 0.03f)]
         public float uiOffsetPositionY = 0.0f;
@@ -145,6 +143,7 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UI
         public RadialViewAnchor radialViewAnchor;
         public GameObject toggleFeaturePanel;
         public SolverHandler anchorSolvers;
+        public GameObject anchors;
 
 
 
@@ -651,11 +650,6 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UI
             radialViewAnchor.IsAppActive(true);
             sphereSize = sphereSizeCalibrate;
             toggleFeaturePanelVisibility = true;
-            if (firstTime)
-            {
-                toggleFeaturePanel.GetComponent<FeaturesPanelKeyboard>().toggleSettings.IsToggled = true;
-                firstTime = false;
-            }
         }
 
         public void StartCalibration()
@@ -667,6 +661,7 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UI
         {         
 
             ActivateMenus();
+            toggleFeaturePanel.GetComponent<FeaturesPanelKeyboard>().ToggleOptions(2);
             isCalibrating = true;
             if (isCalibrating)
             {
@@ -676,6 +671,7 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UI
                 isCalibrating = false;
                 readyForCalibration = false;
             }
+            toggleFeaturePanel.GetComponent<FeaturesPanelKeyboard>().ToggleOptions(2);
 
         }
     }

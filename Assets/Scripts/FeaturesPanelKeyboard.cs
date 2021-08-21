@@ -61,6 +61,8 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UI
         public ArmUiHandler armUiHandler = null;
         public GameObject environment = null;
         public GameObject anchors = null;
+        public GameObject calibrateArea = null;
+        private bool firstTime = true;
 
         private GameObject localAvatar = null;
         private GameObject cameraRig = null;
@@ -78,6 +80,8 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UI
             userIdText.text = userId.ToString();
             targetObject.SetActive(false);
             gameObject.SetActive(false);
+            anchors.SetActive(false);
+            firstTime = true;
         }
 
         private void Update()
@@ -96,14 +100,6 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UI
 
             }
 
-            if (toggleSettings.IsToggled && gameObject.activeInHierarchy)
-            {
-                anchors.SetActive(true);
-            }
-            else
-            {
-                anchors.SetActive(false);
-            }
 
             if (togglePassthrough.IsToggled)
             {
@@ -204,6 +200,7 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UI
     
         public void ToggleOptions(int buttonNum)
         {
+ 
             switch (buttonNum)
             {
                 //Home active
@@ -211,12 +208,25 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UI
                     homePanel.SetActive(true);
                     settingsPanel.SetActive(false);
                     toggleSettings.IsToggled = false;
+                    anchors.SetActive(false);
+                    calibrateArea.SetActive(false);
                     break;
                 //Settings active
                 case 2:
                     homePanel.SetActive(false);
                     settingsPanel.SetActive(true);
                     toggleHome.IsToggled = false;
+                    if (firstTime)
+                    {                       
+                        anchors.SetActive(false);                                                
+                        firstTime = false;
+                    }
+                    else
+                    {
+                        anchors.SetActive(true);
+                    }
+                    
+                    calibrateArea.SetActive(true);
                     break;
             }
         }
