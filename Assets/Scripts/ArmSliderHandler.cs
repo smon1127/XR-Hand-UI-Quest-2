@@ -37,7 +37,7 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UI
         private ScrollingObjectCollection localScroll;
         private ScrollingObjectCollection referenceScroll;
         public Transform colliderScaleReference;
-
+        public bool isTic = false;
         public List<GameObject> hapticTicCollider = new List<GameObject>();
         public List<Transform> scrollObjectPosition;
         string hapticTicColliderTag = "hapticTicCollider";
@@ -125,7 +125,7 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UI
             gameObject.transform.position = firstObject.position;
 
             //Offset position y of collider
-            gameObject.transform.localPosition = new Vector3(0, -0.005f, 0);
+            gameObject.transform.localPosition = new Vector3(gameObject.transform.localScale.x/2, gameObject.transform.localScale.y / 2 + armUiHandler.hapticLatencyPositionOffset, 0);
 
 
 
@@ -198,9 +198,18 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UI
             if (other.gameObject.tag == "hapticTicCollider")
             {
                 PlayHapticSoundOnCollision();
+                
+                StartCoroutine(TicDuration());
                 //Debug.Log("Collision");
             }
 
+        }
+
+        IEnumerator TicDuration()
+        {
+            isTic = true;
+            yield return new WaitForSeconds(.001f);
+            isTic = false;
         }
 
         public void IsScrollStart(bool isStart)
@@ -233,9 +242,9 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UI
                     hapticPitch = Mathf.Lerp(hapticSound.scrollLowPitch, hapticSound.scrollHighPitch, normal);
                     hapticSound.PressKeyHapticSample(hapticSound.playHapticSoundPattern);
                     hapticSound.UpdatePitch(hapticSound.playHapticSoundPattern, hapticPitch);
-                    //Debug.Log("Passed Notch");                   
+                    //Debug.Log("Passed Notch");                    
                 }
-
+                
                 lastSoundPlayTime = now;
             }
         }

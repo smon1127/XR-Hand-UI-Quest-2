@@ -29,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 3929667010727284286}
   m_LocalRotation: {x: 3.808508e-12, y: 0.000000005587991, z: 2.475233e-15, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.01, y: 0.01, z: 0.010000001}
+  m_LocalScale: {x: 0.1, y: 0.16, z: 0.010000001}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -57,11 +57,10 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
-  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: c83995722aba21243907c122b4c403e4, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -82,7 +81,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!65 &5870407707387877500
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -108,20 +106,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f26e85472a9543f46bf8a0d7583c7243, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactionStartSound: {fileID: 0}
-  interactionEndSound: {fileID: 0}
-  playTickSounds: 1
-  passNotchSound: {fileID: 8300000, guid: 0632575a55cf09349a999a10968f6395, type: 3}
-  hapticPatternDefault: {fileID: 8300000, guid: b92f01cc9c45ca34591e80f4f8e67269, type: 3}
-  minSecondsBetweenTicks: 0.01
-  gridObjectCollection: {fileID: 0}
-  otherGridObjectCollection: {fileID: 0}
-  hapticPattern: 1
+  armUiHandler: {fileID: 0}
+  hapticSound: {fileID: 0}
+  scrollbarReferenceRect: {fileID: 0}
+  scrollbarVerticalRect: {fileID: 0}
+  scrollbarHoverWidth: 0
+  localGridObjectCollection: {fileID: 0}
+  referenceGridObjectCollection: {fileID: 0}
   colliderScaleReference: {fileID: 0}
+  isTic: 0
   hapticTicCollider: []
   scrollObjectPosition: []
-  hapticTicColliderTag: hapticTicCollider
-  quadTag: quad
-  standalone: 1
-  hoverColor: {r: 0.14, g: 0.21, b: 0.63, a: 1}
-  defaultColor: {r: 0.08050018, g: 0.103952445, b: 0.254717, a: 1}
+  sliderHeight: 0

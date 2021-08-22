@@ -240,7 +240,7 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UI
                 hapticAudioSource.pitch = hapticPitch;
             }                
 
-            yield return new WaitForSeconds(armUiHandler.hapticLatencyOffset);
+            yield return new WaitForSeconds(armUiHandler.hapticLatencyAudioOffset);
 
             if (armUiHandler.isAudio)
             {

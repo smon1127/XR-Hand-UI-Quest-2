@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 615551112146809414}
   - component: {fileID: 8415624975151149543}
   - component: {fileID: 3646329500666783950}
-  - component: {fileID: 6979962393863841504}
   m_Layer: 0
   m_Name: hapticTicCollider
   m_TagString: hapticTicCollider
@@ -29,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 234536653735993172}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: -0.017000005, z: 0}
-  m_LocalScale: {x: 0.01, y: 0.014, z: 0.01}
+  m_LocalScale: {x: 0.14, y: 0.16, z: 0.01}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -60,7 +59,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 0}
+  - {fileID: 2100000, guid: bc352011671d9a44d9355d2cc8f995d7, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -94,17 +93,3 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &6979962393863841504
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 234536653735993172}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: caf309545b476f649949bf93bf4830d1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  defaultMaterials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}

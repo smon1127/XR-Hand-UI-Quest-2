@@ -79,7 +79,7 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UI
 
             userIdText.text = userId.ToString();
             targetObject.SetActive(false);
-            gameObject.SetActive(false);
+            gameObject.SetActive(true);
             anchors.SetActive(false);
             firstTime = true;
         }

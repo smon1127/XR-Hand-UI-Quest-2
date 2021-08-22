@@ -33,8 +33,15 @@
         public float targetThreshold = .1f;
         private string selectTextIdle = "";
         public float tempTargetOffset = 0.8f;
-
+        public int currentScrollIndex;
         public int currentTargetIndex;
+        public float itemScaleOnTic = 1.5f;
+        public float itemScale = 1;
+        public float itemScaleFallOff = .7f;
+        public bool shuffle = false;
+        public GameObject buttonSelectIdle = null;
+        public GameObject buttonSelectShuffle = null;
+        public ArmSliderHandler armSliderHandler = null;
 
         void Start()
         {
@@ -50,8 +57,12 @@
             int childCount = 0;
             foreach (Transform child in _gridObjectCollection)
             {
+               
+                
                 _targetObjectParent[childCount] = child;
                 _targetObject[childCount] = child.GetChild(0);
+                       
+
                 childCount++;
             }
         }
@@ -59,7 +70,28 @@
         private void Update()
         {
 
-            Debug.Log("cur. scroll: " + currentScrollPosition + "targ. scroll: " + targetScrollPosition);
+            //int childCount = 0;
+            //foreach (Transform child in gridObjectCollection)
+            //{          
+            //    //Do sth with current scroll object
+            //    if (childCount == currentScrollIndex)
+            //    {
+                    
+            //    }
+
+            //}
+
+            if (shuffle)
+            {
+                buttonSelectIdle.SetActive(false);
+                buttonSelectShuffle.SetActive(true);
+            }else
+            {
+                buttonSelectIdle.SetActive(true);
+                buttonSelectShuffle.SetActive(false);
+            }
+
+            Debug.Log("c.index: " + currentScrollIndex + "c.scroll: " + currentScrollPosition + "t.scroll: " + targetScrollPosition);
 
             if (Input.GetKeyDown(KeyCode.Space))
                 Shuffle();
@@ -69,12 +101,13 @@
                 MoveToTargetIndex();
             }
 
-            currentScrollPosition = scrollObjectCollection.workingScrollerPos; 
+            currentScrollPosition = scrollObjectCollection.workingScrollerPos;
+            currentScrollIndex = (int)(currentScrollPosition.y/scrollObjectCollection.CellHeight);
         }
 
             public void MoveToTargetIndex()
         {            
-                scrollObjectCollection.MoveToIndex(currentTargetIndex);          
+                scrollObjectCollection.MoveToIndex(currentTargetIndex, true);          
                 
             
         }
@@ -105,27 +138,35 @@
             //Scroll to y-Position with targetObject in Panel
             float cellHeight = gridObjectCollectionPanel.GetComponent<GridObjectCollection>().CellHeight;
             targetScrollPosition = new Vector3(0,currentTargetIndex* cellHeight,0);
-            scrollObjectCollectionPanel.ApplyPosition(targetScrollPosition);
+            scrollObjectCollectionPanel.MoveToIndex(currentTargetIndex, true);
         }
 
         public void SelectTarget()
         {
 
-       
-
-                if (currentScrollPosition.y > (targetScrollPosition.y + tempTargetOffset - targetThreshold) && currentScrollPosition.y < (targetScrollPosition.y + tempTargetOffset + targetThreshold))
+            if (shuffle)
+            {
+                Shuffle();
+                shuffle = false;
+            }
+            else
+            {
+                if (currentScrollPosition.y > (targetScrollPosition.y - targetThreshold) && currentScrollPosition.y < (targetScrollPosition.y + targetThreshold))
                 {
-                    evaluationTimer.StopTimer();
-                    StartCoroutine(VisualFeedbackTargetSelection(true));
+                    evaluationTimer.StopTimer();                    
+                    StartCoroutine(VisualFeedbackTargetSelection(true));                    
                 }
                 else
                 {
 
                     StartCoroutine(VisualFeedbackTargetSelection(false));
                 }
-            
-            
+            }
         }
+            
+            
+            
+        
 
         IEnumerator VisualFeedbackTargetSelection(bool isRight)
         {
@@ -134,13 +175,17 @@
             {
                 selectText.text = "Right";
                 selectBoxQuadMesh.material.SetColor("_Color", selectionCorrectColor);
-            }else
+                yield return new WaitForSeconds(0.5f);
+                shuffle = true;
+                yield return new WaitForSeconds(.01f);
+            }
+            else
             {
                 selectText.text = "Wrong";
                 selectBoxQuadMesh.material.SetColor("_Color", selectionIncorrectColor);
+                yield return new WaitForSeconds(0.5f);
             }
-
-            yield return new WaitForSeconds(0.5f);
+            
             selectText.text = selectTextIdle;
             selectBoxQuadMesh.material.SetColor("_Color", selectionIdleColor);
 

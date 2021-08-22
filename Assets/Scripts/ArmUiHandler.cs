@@ -63,8 +63,10 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UI
         public float togglePositionPalmUpZ = 0f;
 
 
-        [Range(0, 1)]
-        public float hapticLatencyOffset = 0.013f;
+        [Range(-0.1f, 0.1f)]
+        public float hapticLatencyPositionOffset = 0.013f;
+        [Range(0f, 1f)]
+        public float hapticLatencyAudioOffset = 0f;
         [Range(0.01f, 0.1f)]
         public float sphereSizeCalibrate = 0.04f;
         public float sphereSizeIdle = 0.4f;
@@ -72,7 +74,11 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UI
 
         public int hoverItemTierPage = 3;
         public int armHapticPattern = 1;
+
+     
+
         public Vector3 worldUIStartPosition = new Vector3(0,0.1f,0.2f);
+        public Vector3 panelStartPosition = new Vector3(0f, 0.3f, 0f);
 
 
         public Color calibrationColor = new Vector4(0, 0, 0, 1);
@@ -85,6 +91,7 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UI
         //public Color armHoverColor = new Vector4(0.3160377f, 0.6499509f, 1, 1);
         //public Color armIdleColor = new Vector4(0, 0, 0, 1);
         public bool debug = false;
+        
         public bool isPalmUp = false;
         public bool leftIndexInCalibrationZone = false;
         public bool rightIndexInCalibrationZone = false;
@@ -132,6 +139,7 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UI
         public PinchSlider pinchSliderSwitch = null;
         public ScrollingObjectCollection armScroll;
         public ScrollingObjectCollection worldScroll;
+        public Randomizer randomizer;
         public Transform worldGridObject;
         public Transform armGridObject;
         public GameObject menuToggle;
@@ -144,8 +152,9 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UI
         public GameObject toggleFeaturePanel;
         public SolverHandler anchorSolvers;
         public GameObject anchors;
-
-
+        public ArmSliderHandler armSliderHandler = null;
+        public Interactable buttonSelect;
+        public MeshRenderer scrollBackplateQuad;
 
         //private InputDevice LeftController = new InputDevice();
         //private InputDevice RightController = new InputDevice();
@@ -191,6 +200,7 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UI
             calibrateSpherePosXLeft = calibrateSphere.transform.position.x;
             sphereSize = sphereSizeIdle;
             anchorSolvers.AdditionalOffset = worldUIStartPosition;
+            toggleFeaturePanel.transform.localPosition = panelStartPosition;
 
             if (rightIsDominant)
             {
@@ -224,11 +234,17 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UI
                 radialViewAnchor.IsAppActive(false);
             }
             
+
         }
+
 
         // Update is called once per frame
         void Update()
         {
+
+            
+
+
 
             //// If MRTK is in the process of disabling all services, then do not create a new camera 
             //if (!MixedRealityToolkit.IsDisablingAllServices)
@@ -284,10 +300,26 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UI
             //    }
             //}
 
-            if (armButtonsPressed)
-            {
-                toggleFeaturePanel.GetComponent<Randomizer>().SelectTarget();
-            }
+            //Simulate Select button press on arm button press
+            
+          
+
+            //foreach (Transform childArm in armGridObject)
+            //{                             
+            //    if (childArm.gameObject.GetComponent<Interactable>().HasPress)
+            //    {
+            //        buttonSelect.SetInputDown();
+            //        randomizer.SelectTarget();
+            //        Debug.Log("Armbutton pressed");
+            //    }                   
+            //    else
+            //    {
+            //        buttonSelect.SetInputUp();
+            //    }                 
+
+            //}
+
+        
 
             if (toggleFeaturePanelVisibility)
             {
@@ -411,8 +443,15 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UI
 
                 elbow.LookAt(wrist);
 
+                if (armSliderHandler.isTic)
+                {
+                    scrollBackplateQuad.material.SetFloat("_BorderWidth", 0.4f);
+                }
+                else
+                {
+                    scrollBackplateQuad.material.SetFloat("_BorderWidth", 0.2f);
+                }
 
-                
 
                 if (armScroll.IsEngaged || worldScroll.IsEngaged)
                 {
@@ -638,7 +677,7 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UI
         {
             uiOffset.gameObject.SetActive(false);
             //menuToggle.SetActive(false);
-            sphereSize = sphereSizeIdle;
+            //sphereSize = sphereSizeIdle;
         }
 
 
@@ -648,7 +687,7 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UI
             //menuToggle.SetActive(true);
             circularButtonInteractable.IsToggled = true;
             radialViewAnchor.IsAppActive(true);
-            sphereSize = sphereSizeCalibrate;
+            //sphereSize = sphereSizeCalibrate;
             toggleFeaturePanelVisibility = true;
         }
 
