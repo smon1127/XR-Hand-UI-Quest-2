@@ -1175,34 +1175,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   defaultMaterials:
   - {fileID: 2100000, guid: cebb77011e9baeb4aa53e312912a7159, type: 2}
---- !u!114 &576448661
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8306226625069584661}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: caf309545b476f649949bf93bf4830d1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  defaultMaterials:
-  - {fileID: 2100000, guid: bc352011671d9a44d9355d2cc8f995d7, type: 2}
---- !u!114 &889429769
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8306226625069584661}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: caf309545b476f649949bf93bf4830d1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  defaultMaterials:
-  - {fileID: 2100000, guid: bc352011671d9a44d9355d2cc8f995d7, type: 2}
 --- !u!1 &8326537165423861342
 GameObject:
   m_ObjectHideFlags: 0
@@ -1370,7 +1342,7 @@ Transform:
   m_GameObject: {fileID: 8604448796114138153}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0, y: 0, z: 0}
-  m_LocalScale: {x: 0.1, y: 0.16, z: 0.01}
+  m_LocalScale: {x: 0.1, y: 0.14, z: 0.01}
   m_Children: []
   m_Father: {fileID: 453915513568626920}
   m_RootOrder: 0
@@ -1820,15 +1792,9 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 2100000, guid: bc352011671d9a44d9355d2cc8f995d7, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8c1a7edb04ffeb94c89cd5572917ec13, type: 3}
---- !u!1 &8306226625069584661 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 234536653735993172, guid: 8c1a7edb04ffeb94c89cd5572917ec13,
-    type: 3}
-  m_PrefabInstance: {fileID: 8071744397581225537}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8945388392455957531 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 873979366104195674, guid: 8c1a7edb04ffeb94c89cd5572917ec13,

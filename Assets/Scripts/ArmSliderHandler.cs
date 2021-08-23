@@ -144,7 +144,7 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UI
         void Update()
         {
 
-            scrollbarReferenceRect.localPosition = new Vector3(0, localScroll.ScrollContainerPosition.y*1000, 0);
+            scrollbarReferenceRect.localPosition = new Vector3(0, localScroll.ScrollContainerPosition.y * 1000, 0);
 
             if (localScroll.IsEngaged || referenceScroll.IsEngaged)
             {
@@ -161,12 +161,13 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UI
             {
                 hapticTicCollider[i].transform.position = scrollObjectPosition[i].position;
             }
-            OnTriggerEnter(gameObject.GetComponent<BoxCollider>());
-
-
-
-
         }
+
+        private void LateUpdate()
+        {
+            OnTriggerEnter(gameObject.GetComponent<BoxCollider>());
+        }
+
 
         //public void IsHover(bool hover)
         //{

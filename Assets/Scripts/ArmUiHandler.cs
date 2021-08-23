@@ -155,6 +155,7 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UI
         public ArmSliderHandler armSliderHandler = null;
         public Interactable buttonSelect;
         public MeshRenderer scrollBackplateQuad;
+        public PointerBehaviorControls pointerBehavior;
 
         //private InputDevice LeftController = new InputDevice();
         //private InputDevice RightController = new InputDevice();
@@ -237,11 +238,49 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UI
 
         }
 
+        //IEnumerator DelayUntilPointerOn()
+        //{
+        //    yield return new WaitForSeconds(2);
+
+        //    if (rightIsDominant)
+        //    {
+        //        PointerUtils.SetHandPokePointerBehavior(PointerBehavior.Default, Handedness.Left);
+        //        PointerUtils.SetHandRayPointerBehavior(PointerBehavior.Default, Handedness.Left);
+        //        PointerUtils.SetHandGrabPointerBehavior(PointerBehavior.Default, Handedness.Left);
+        //    }
+        //    else
+        //    {
+        //        PointerUtils.SetHandPokePointerBehavior(PointerBehavior.Default, Handedness.Right);
+        //        PointerUtils.SetHandRayPointerBehavior(PointerBehavior.Default, Handedness.Right);
+        //        PointerUtils.SetHandGrabPointerBehavior(PointerBehavior.Default, Handedness.Right);
+        //    }
+        //}
+
 
         // Update is called once per frame
         void Update()
         {
 
+            //if (armScroll.IsDragging)
+            //{
+            //    if (rightIsDominant)
+            //    {
+            //        PointerUtils.SetHandPokePointerBehavior(PointerBehavior.AlwaysOff, Handedness.Left);
+            //        PointerUtils.SetHandRayPointerBehavior(PointerBehavior.AlwaysOff, Handedness.Left);
+            //        PointerUtils.SetHandGrabPointerBehavior(PointerBehavior.AlwaysOff, Handedness.Left);
+            //    }
+            //    else
+            //    {
+            //        PointerUtils.SetHandPokePointerBehavior(PointerBehavior.AlwaysOff, Handedness.Right);
+            //        PointerUtils.SetHandRayPointerBehavior(PointerBehavior.AlwaysOff, Handedness.Right);
+            //        PointerUtils.SetHandGrabPointerBehavior(PointerBehavior.AlwaysOff, Handedness.Right);
+            //    }
+
+            //}
+            //else
+            //{
+            //    StartCoroutine(DelayUntilPointerOn());
+            //}
             
 
 

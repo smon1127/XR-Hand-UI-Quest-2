@@ -298,6 +298,9 @@ namespace Microsoft.MixedReality.Toolkit.Utilities.Solvers
             solverHandler = gameObject.GetComponent<SolverHandler>();
             coloredObject.GetComponent<MeshRenderer>().material.SetColor("_RimColor", defaultColor);
             anchors.gameObject.SetActive(false);
+
+            tiltedWindow = !tiltedWindow;
+            ToggleTiltedWindow();
         }
 
        
@@ -414,10 +417,12 @@ namespace Microsoft.MixedReality.Toolkit.Utilities.Solvers
             if (tiltedWindow)
             {
                 solverHandler.AdditionalRotation = new Vector3(25,0,0);
+                solverHandler.AdditionalOffset = new Vector3(0, -0.05f, -0.1f);
             }
             else
             {
                 solverHandler.AdditionalRotation = new Vector3(0, 0, 0);
+                solverHandler.AdditionalOffset = new Vector3(0, 0, 0);
             }
         }
 
