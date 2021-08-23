@@ -22,6 +22,7 @@
         private Transform tempGoPanel;
         public ScrollingObjectCollection scrollObjectCollectionPanel;
         public ScrollingObjectCollection scrollObjectCollection;
+        public ScrollingObjectCollection scrollObjectCollectionArm;
         public Vector3 currentScrollPosition = new Vector3();
         public Vector3 targetScrollPosition = new Vector3();
         public EvaluationTimer evaluationTimer;
@@ -101,7 +102,15 @@
                 MoveToTargetIndex();
             }
 
-            currentScrollPosition = scrollObjectCollection.workingScrollerPos;
+            if (scrollObjectCollection.IsDragging)
+            {
+                currentScrollPosition = scrollObjectCollection.workingScrollerPos;
+            }else
+            {
+                currentScrollPosition = scrollObjectCollectionArm.workingScrollerPos;
+            }
+            
+
             currentScrollIndex = (int)(currentScrollPosition.y/scrollObjectCollection.CellHeight);
         }
 
@@ -148,13 +157,16 @@
             {
                 Shuffle();
                 shuffle = false;
+                scrollObjectCollection.MoveToIndex(0, true);
+                scrollObjectCollectionArm.MoveToIndex(0, true);
             }
             else
             {
                 if (currentScrollPosition.y > (targetScrollPosition.y - targetThreshold) && currentScrollPosition.y < (targetScrollPosition.y + targetThreshold))
                 {
                     evaluationTimer.StopTimer();                    
-                    StartCoroutine(VisualFeedbackTargetSelection(true));                    
+                    StartCoroutine(VisualFeedbackTargetSelection(true));
+                    
                 }
                 else
                 {
@@ -178,6 +190,7 @@
                 yield return new WaitForSeconds(0.5f);
                 shuffle = true;
                 yield return new WaitForSeconds(.01f);
+
             }
             else
             {
