@@ -1,4 +1,6 @@
-[Ll]ibrary/
+[Ll]ibrary/*
+![Ll]ibrary/*/Scripts/ScrollingObjectCollection/
+
 [Tt]emp/
 [Oo]bj/
 [Bb]uild/

@@ -1,2 +1,2 @@
-# XR Hand User Interface Demo with Audio Haptics and Passthrough Support for Oculus Quest
-...
+# OculusPassthroughDemos
+Various demos with Oculus Passthrough API
