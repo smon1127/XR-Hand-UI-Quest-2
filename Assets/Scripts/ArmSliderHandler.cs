@@ -93,7 +93,7 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UI
             scrollbarReferenceRect.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, absolutSliderHeight * 1000);
             scrollbarReferenceRect.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, pageCellWidth * 1000);
             
-            scrollbarVerticalRect.gameObject.GetComponent<Scrollbar>().size = armUiHandler.scrollBarSize;
+            //scrollbarVerticalRect.gameObject.GetComponent<Scrollbar>().size = armUiHandler.scrollBarSize;
 
             //select each haptics tic collider from childs     
 

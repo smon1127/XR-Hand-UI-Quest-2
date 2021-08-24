@@ -132,7 +132,7 @@
                 targetObjectPanel[i].localPosition = new Vector3(0, 0, 0);
             }
             //Define targetObject randomized of last third
-            currentTargetIndex = Random.Range(targetObjectParent.Count / 3 * 2, targetObjectParent.Count-1);
+            currentTargetIndex = Random.Range(targetObjectParent.Count / 3 * 2, targetObjectParent.Count);
 
             //Scroll to y-Position with targetObject in Panel
             

@@ -91,6 +91,9 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UI
         public Color scrollArowIdleColor = new Vector4(1, 1, 1, .5f);
         public Color hoverBackplateColor = new Vector4(0,0,0, 1f);
         public Color idleBackplateColor = new Vector4(0, 0, 0, 1f);
+        public Color dragCursorColor = new Vector4(0, 0, 0, 1f);
+        public Color idleCursorColor = new Vector4(0, 0, 0, 1f);
+        
         //public Color armHoverColor = new Vector4(0.3160377f, 0.6499509f, 1, 1);
         //public Color armIdleColor = new Vector4(0, 0, 0, 1);
         public bool debug = false;
@@ -204,6 +207,7 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UI
         private GameObject currentWorldItem;
         private bool readyForCalibration = true;
 
+        public MeshRenderer cursor = null;
 
         void TrackingLost()
         {
@@ -220,7 +224,15 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UI
                 Debug.Log(string.Format("Device found with name '{0}' and role '{1}'", dev.name, dev.isValid.ToString()));
             }
 
-            Debug.Log("----------------------------------- " + Devices.Count.ToString());        
+            Debug.Log("----------------------------------- " + Devices.Count.ToString());
+
+
+            //if (leftHandIsTracked)
+            //{
+            //    cursor = GameObject.Find("MRTK_FingerTipRing_Index").GetComponent<MeshRenderer>();
+            //}
+
+
 
             calibrateSpherePosXRight = -calibrateSphere.transform.position.x;
             calibrateSpherePosXLeft = calibrateSphere.transform.position.x;
@@ -241,7 +253,7 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UI
             if (handJointService != null)
             {
                 leftHandIsTracked = handJointService.IsHandTracked(Handedness.Left);
-                rightHandIsTracked = handJointService.IsHandTracked(Handedness.Left);
+                rightHandIsTracked = handJointService.IsHandTracked(Handedness.Left);                
             }
 
             if (debug)
@@ -290,30 +302,33 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UI
 
 
         }
+          
 
-        //IEnumerator DelayUntilPointerOn()
-        //{
-        //    yield return new WaitForSeconds(2);
+    //IEnumerator DelayUntilPointerOn()
+    //{
+    //    yield return new WaitForSeconds(2);
 
-        //    if (rightIsDominant)
-        //    {
-        //        PointerUtils.SetHandPokePointerBehavior(PointerBehavior.Default, Handedness.Left);                
-        //        PointerUtils.SetHandGrabPointerBehavior(PointerBehavior.Default, Handedness.Left);
-        //    }
-        //    else
-        //    {
-        //        PointerUtils.SetHandPokePointerBehavior(PointerBehavior.Default, Handedness.Right);                
-        //        PointerUtils.SetHandGrabPointerBehavior(PointerBehavior.Default, Handedness.Right);
-        //    }
+    //    if (rightIsDominant)
+    //    {
+    //        PointerUtils.SetHandPokePointerBehavior(PointerBehavior.Default, Handedness.Left);                
+    //        PointerUtils.SetHandGrabPointerBehavior(PointerBehavior.Default, Handedness.Left);
+    //    }
+    //    else
+    //    {
+    //        PointerUtils.SetHandPokePointerBehavior(PointerBehavior.Default, Handedness.Right);                
+    //        PointerUtils.SetHandGrabPointerBehavior(PointerBehavior.Default, Handedness.Right);
+    //    }
 
-        //    PointerUtils.SetHandRayPointerBehavior(PointerBehavior.Default, Handedness.Right);
-        //    PointerUtils.SetHandRayPointerBehavior(PointerBehavior.Default, Handedness.Left);
-        //}
+    //    PointerUtils.SetHandRayPointerBehavior(PointerBehavior.Default, Handedness.Right);
+    //    PointerUtils.SetHandRayPointerBehavior(PointerBehavior.Default, Handedness.Left);
+    //}
 
 
-        // Update is called once per frame
-        void Update()
+    // Update is called once per frame
+    void Update()
         {
+          
+
             if (worldScroll.IsTouched)
             {
                 currentScrollPosition = worldScroll.workingScrollerPos;
@@ -323,9 +338,13 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UI
 
             if (armScroll.IsEngaged)
             {
-
+                cursor.material.SetColor("_Base_Color", dragCursorColor);
                 currentScrollPosition = armScroll.workingScrollerPos;
                 worldScroll.ApplyPosition(currentScrollPosition);
+            }
+            else
+            {
+                cursor.material.SetColor("_Base_Color", idleCursorColor);
             }
 
             currentScrollIndex = (int)(currentScrollPosition.y / pageCellHeight);
@@ -430,7 +449,7 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UI
 
             //}
 
-        
+           
 
             if (toggleFeaturePanelVisibility)
             {
@@ -473,14 +492,12 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UI
 
                 //ArticulatedHandDefinition bla = bla.IsPinching;
 
-                if (handJointService != null)
-                {
                     leftHandIsTracked = handJointService.IsHandTracked(Handedness.Left);
                     rightHandIsTracked = handJointService.IsHandTracked(Handedness.Left);
 
                     rightIndex.position = handJointService.RequestJointTransform(TrackedHandJoint.IndexTip, Handedness.Right).position;
                     rightIndex.eulerAngles = handJointService.RequestJointTransform(TrackedHandJoint.IndexTip, Handedness.Right).eulerAngles;
-
+                    
                     rightThumb.position = handJointService.RequestJointTransform(TrackedHandJoint.ThumbMetacarpalJoint, Handedness.Right).position;
                     rightThumb.eulerAngles = handJointService.RequestJointTransform(TrackedHandJoint.ThumbMetacarpalJoint, Handedness.Right).eulerAngles;
 
@@ -495,7 +512,7 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UI
 
                     leftWrist.position = handJointService.RequestJointTransform(TrackedHandJoint.Wrist, Handedness.Left).position;
                     leftWrist.eulerAngles = handJointService.RequestJointTransform(TrackedHandJoint.Wrist, Handedness.Left).eulerAngles;
-                }
+                
        
 
 
