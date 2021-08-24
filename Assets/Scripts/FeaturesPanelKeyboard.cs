@@ -76,7 +76,7 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UI
             cameraRig = GameObject.Find("MRTK-Quest_OVRCameraRig(Clone)");
             passthroughLayer = cameraRig.GetComponent<OVRPassthroughLayer>();
 
-
+            togglePassthrough.IsToggled = armUiHandler.isPassthrough;
             userIdText.text = userId.ToString();
             targetObject.SetActive(false);
             gameObject.SetActive(true);

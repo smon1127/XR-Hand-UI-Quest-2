@@ -1,5 +1,6 @@
 ﻿namespace Microsoft.MixedReality.Toolkit.Experimental.UI
 {
+    using Microsoft.MixedReality.Toolkit.Input;
     using Microsoft.MixedReality.Toolkit.UI;
     using Microsoft.MixedReality.Toolkit.Utilities;
     using System.Collections;
@@ -16,33 +17,38 @@
         public List<Transform> targetObject = new List<Transform>();
         private Transform tempGo;
 
-        public Transform gridObjectCollectionPanel;
+        public Transform gridObjectCollectionPanel;        
         public List<Transform> targetObjectParentPanel = new List<Transform>();
         public List<Transform> targetObjectPanel = new List<Transform>();
         private Transform tempGoPanel;
-        public ScrollingObjectCollection scrollObjectCollectionPanel;
-        public ScrollingObjectCollection scrollObjectCollection;
-        public ScrollingObjectCollection scrollObjectCollectionArm;
-        public Vector3 currentScrollPosition = new Vector3();
+
+        public ScrollingObjectCollection panelScroll;
+        public ScrollingObjectCollection worldScroll;
+        public ScrollingObjectCollection armScroll;
+
+        public ArmUiHandler armUiHandler = null;
+        public ArmSliderHandler armSliderHandler = null;
         public Vector3 targetScrollPosition = new Vector3();
+        public int currentTargetIndex;
+        public float tempTargetOffset = 0.8f;
+        public float targetThreshold = .1f;
+
         public EvaluationTimer evaluationTimer;
         public MeshRenderer selectBoxQuadMesh;
         public Color selectionCorrectColor = new Vector4(0, 0, 0, 1f);
         public Color selectionIncorrectColor = new Vector4(0, 0, 0, 1f);
         private Color selectionIdleColor = new Vector4();
-        public TextMeshPro selectText;
-        public float targetThreshold = .1f;
-        private string selectTextIdle = "";
-        public float tempTargetOffset = 0.8f;
-        public int currentScrollIndex;
-        public int currentTargetIndex;
+        public TextMeshPro selectText;        
+        private string selectTextIdle = "";    
+
         public float itemScaleOnTic = 1.5f;
         public float itemScale = 1;
         public float itemScaleFallOff = .7f;
         public bool shuffle = false;
         public GameObject buttonSelectIdle = null;
         public GameObject buttonSelectShuffle = null;
-        public ArmSliderHandler armSliderHandler = null;
+        
+
 
         void Start()
         {
@@ -57,13 +63,9 @@
         {
             int childCount = 0;
             foreach (Transform child in _gridObjectCollection)
-            {
-               
-                
+            {             
                 _targetObjectParent[childCount] = child;
-                _targetObject[childCount] = child.GetChild(0);
-                       
-
+                _targetObject[childCount] = child.GetChild(0);               
                 childCount++;
             }
         }
@@ -92,8 +94,7 @@
                 buttonSelectShuffle.SetActive(false);
             }
 
-            Debug.Log("c.index: " + currentScrollIndex + "c.scroll: " + currentScrollPosition + "t.scroll: " + targetScrollPosition);
-
+            
             if (Input.GetKeyDown(KeyCode.Space))
                 Shuffle();
 
@@ -102,35 +103,12 @@
                 MoveToTargetIndex();
             }
 
-            if (scrollObjectCollection.IsDragging)
-            {
-                currentScrollPosition = scrollObjectCollection.workingScrollerPos;
-                scrollObjectCollectionArm.ApplyPosition(currentScrollPosition);
 
-            }
-            else if (scrollObjectCollectionArm.IsDragging)
-            {
-                currentScrollPosition = scrollObjectCollectionArm.workingScrollerPos;
-                scrollObjectCollection.ApplyPosition(currentScrollPosition);
-            }
-
-            //if (scrollObjectCollectionArm.IsEngaged)
-            //{
-            //    scrollObjectCollection.ApplyPosition(scrollObjectCollectionArm.workingScrollerPos);
-            //}
-            //else if (scrollObjectCollection.IsEngaged)
-            //{
-            //    scrollObjectCollectionArm.ApplyPosition(scrollObjectCollection.workingScrollerPos);
-            //}
-
-            currentScrollIndex = (int)(currentScrollPosition.y/scrollObjectCollection.CellHeight);
         }
 
-            public void MoveToTargetIndex()
+        public void MoveToTargetIndex()
         {            
-                scrollObjectCollection.MoveToIndex(currentTargetIndex, true);          
-                
-            
+            worldScroll.MoveToIndex(currentTargetIndex, true);        
         }
 
         public void Shuffle()
@@ -157,9 +135,11 @@
             currentTargetIndex = Random.Range(targetObjectParent.Count / 3 * 2, targetObjectParent.Count);
 
             //Scroll to y-Position with targetObject in Panel
-            float cellHeight = gridObjectCollectionPanel.GetComponent<GridObjectCollection>().CellHeight;
-            targetScrollPosition = new Vector3(0,currentTargetIndex* cellHeight,0);
-            scrollObjectCollectionPanel.MoveToIndex(currentTargetIndex, true);
+            
+            targetScrollPosition = new Vector3(0,currentTargetIndex*armUiHandler.pageCellHeight, 0);
+            panelScroll.MoveToIndex(currentTargetIndex, true);
+            worldScroll.MoveToIndex(0, true);
+            armScroll.MoveToIndex(0, true);
         }
 
         public void SelectTarget()
@@ -168,13 +148,14 @@
             if (shuffle)
             {
                 Shuffle();
-                shuffle = false;
-                scrollObjectCollection.MoveToIndex(0, true);
-                scrollObjectCollectionArm.MoveToIndex(0, true);
+                shuffle = false;                
             }
             else
             {
-                if (currentScrollPosition.y > (targetScrollPosition.y - targetThreshold) && currentScrollPosition.y < (targetScrollPosition.y + targetThreshold))
+                float currentScrollWithOffset = armUiHandler.currentScrollPosition.y + armUiHandler.pageCellHeight;
+                float targetScrollWithOffset = targetScrollPosition.y;
+                Debug.Log("currentScrollWithOffset: " + currentScrollWithOffset);
+                if (currentScrollWithOffset > (targetScrollWithOffset - targetThreshold) && currentScrollWithOffset < (targetScrollWithOffset + targetThreshold))
                 {
                     evaluationTimer.StopTimer();                    
                     StartCoroutine(VisualFeedbackTargetSelection(true));

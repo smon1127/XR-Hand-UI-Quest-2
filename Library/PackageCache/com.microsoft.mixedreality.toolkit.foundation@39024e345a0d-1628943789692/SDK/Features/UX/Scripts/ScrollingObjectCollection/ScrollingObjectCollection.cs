@@ -284,7 +284,7 @@ namespace Microsoft.MixedReality.Toolkit.UI
 
         [SerializeField]
         [Tooltip("The desired type of velocity for the scroller.")]
-        private VelocityType typeOfVelocity;
+        public VelocityType typeOfVelocity;
 
         /// <summary>
         /// The desired type of velocity for the scroller.

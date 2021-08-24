@@ -107,6 +107,24 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UI
         public bool armButtonsPressed = false;
         public bool leftHandIsTracked = false;
         public bool rightHandIsTracked = false;
+        public bool isScrollSnapping = false;
+        public bool isPassthrough = false;
+
+        [Range(0f, 0.12f)]
+        public float velocityMultiplier = 0.1064f;
+        [Range(0f, 0.99f)]
+        public float velocityDamper = 0.187f;
+        public float pageCellHeight = 0.08f;
+        public float bounceMultiplier = 0.1f;
+        [Range(0f, 0.2f)]
+        public float handDeltaScrollThreshold = 0.0074f;
+        [Range(0f, 0.05f)]
+        public float frontTouchDistance = 0.0026f;
+
+
+        //[Range(-0.1f, 0.1f)]
+        //public float hapticLatencyPositionOffset = 0.013f;
+
 
         //+++++++
         //Public Variables 
@@ -142,9 +160,11 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UI
         public PinchSlider pinchSliderSwitch = null;
         public ScrollingObjectCollection armScroll;
         public ScrollingObjectCollection worldScroll;
+        public ScrollingObjectCollection panelScroll;
         public Randomizer randomizer;
-        public Transform worldGridObject;
-        public Transform armGridObject;
+        public GridObjectCollection worldGridObject;
+        public GridObjectCollection armGridObject;
+        public GridObjectCollection panelGridObject;
         public GameObject menuToggle;
         public GameObject scrollMenu;
         public GameObject mainMenuLeft;
@@ -159,6 +179,8 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UI
         public Interactable buttonSelect;
         public MeshRenderer scrollBackplateQuad;
         public PointerBehaviorControls pointerBehavior;
+        public Vector3 currentScrollPosition = new Vector3();
+        public int currentScrollIndex;
 
         //private InputDevice LeftController = new InputDevice();
         //private InputDevice RightController = new InputDevice();
@@ -237,7 +259,35 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UI
                 isSwitchToggled = true;
                 radialViewAnchor.IsAppActive(false);
             }
-            
+
+            worldScroll.VelocityMultiplier = velocityMultiplier;
+            armScroll.VelocityMultiplier = velocityMultiplier;
+            worldScroll.VelocityDampen = velocityDamper;
+            armScroll.VelocityDampen = velocityDamper;
+            worldScroll.HandDeltaScrollThreshold = handDeltaScrollThreshold;
+            armScroll.HandDeltaScrollThreshold = handDeltaScrollThreshold;
+            worldScroll.CellHeight = pageCellHeight;
+            armScroll.CellHeight = pageCellHeight;
+            panelScroll.CellHeight = pageCellHeight;
+            worldGridObject.CellHeight = pageCellHeight;
+            armGridObject.CellHeight = pageCellHeight;
+            panelGridObject.CellHeight = pageCellHeight;
+            armSliderHandler.colliderScaleReference.localScale = new Vector3(armSliderHandler.colliderScaleReference.localScale.x, pageCellHeight, armSliderHandler.colliderScaleReference.localScale.z);
+            worldScroll.FrontTouchDistance = frontTouchDistance;
+            armScroll.FrontTouchDistance = frontTouchDistance;
+            worldScroll.BounceMultiplier = bounceMultiplier;
+            armScroll.BounceMultiplier = bounceMultiplier;
+            if (isScrollSnapping)
+            {
+                worldScroll.TypeOfVelocity = ScrollingObjectCollection.VelocityType.FalloffPerItem;
+                armScroll.TypeOfVelocity = ScrollingObjectCollection.VelocityType.FalloffPerItem;
+            }
+            else
+            {
+                worldScroll.TypeOfVelocity = ScrollingObjectCollection.VelocityType.FalloffPerFrame;
+                armScroll.TypeOfVelocity = ScrollingObjectCollection.VelocityType.FalloffPerFrame;
+            }
+
 
         }
 
@@ -247,44 +297,63 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UI
 
         //    if (rightIsDominant)
         //    {
-        //        PointerUtils.SetHandPokePointerBehavior(PointerBehavior.Default, Handedness.Left);
-        //        PointerUtils.SetHandRayPointerBehavior(PointerBehavior.Default, Handedness.Left);
+        //        PointerUtils.SetHandPokePointerBehavior(PointerBehavior.Default, Handedness.Left);                
         //        PointerUtils.SetHandGrabPointerBehavior(PointerBehavior.Default, Handedness.Left);
         //    }
         //    else
         //    {
-        //        PointerUtils.SetHandPokePointerBehavior(PointerBehavior.Default, Handedness.Right);
-        //        PointerUtils.SetHandRayPointerBehavior(PointerBehavior.Default, Handedness.Right);
+        //        PointerUtils.SetHandPokePointerBehavior(PointerBehavior.Default, Handedness.Right);                
         //        PointerUtils.SetHandGrabPointerBehavior(PointerBehavior.Default, Handedness.Right);
         //    }
+
+        //    PointerUtils.SetHandRayPointerBehavior(PointerBehavior.Default, Handedness.Right);
+        //    PointerUtils.SetHandRayPointerBehavior(PointerBehavior.Default, Handedness.Left);
         //}
 
 
         // Update is called once per frame
         void Update()
         {
+            if (worldScroll.IsTouched)
+            {
+                currentScrollPosition = worldScroll.workingScrollerPos;
+                armScroll.ApplyPosition(currentScrollPosition);
 
-            //if (armScroll.IsDragging)
+            }
+
+            if (armScroll.IsEngaged)
+            {
+
+                currentScrollPosition = armScroll.workingScrollerPos;
+                worldScroll.ApplyPosition(currentScrollPosition);
+            }
+
+            currentScrollIndex = (int)(currentScrollPosition.y / pageCellHeight);
+
+            Debug.Log("c.index: " + currentScrollIndex + "c.scroll: " + currentScrollPosition + "t.scroll: " + randomizer.targetScrollPosition);
+
+            //if (armScroll.IsTouched)
             //{
             //    if (rightIsDominant)
             //    {
-            //        PointerUtils.SetHandPokePointerBehavior(PointerBehavior.AlwaysOff, Handedness.Left);
-            //        PointerUtils.SetHandRayPointerBehavior(PointerBehavior.AlwaysOff, Handedness.Left);
+            //        PointerUtils.SetHandPokePointerBehavior(PointerBehavior.AlwaysOff, Handedness.Left);                    
             //        PointerUtils.SetHandGrabPointerBehavior(PointerBehavior.AlwaysOff, Handedness.Left);
             //    }
             //    else
             //    {
-            //        PointerUtils.SetHandPokePointerBehavior(PointerBehavior.AlwaysOff, Handedness.Right);
-            //        PointerUtils.SetHandRayPointerBehavior(PointerBehavior.AlwaysOff, Handedness.Right);
+            //        PointerUtils.SetHandPokePointerBehavior(PointerBehavior.AlwaysOff, Handedness.Right);                    
             //        PointerUtils.SetHandGrabPointerBehavior(PointerBehavior.AlwaysOff, Handedness.Right);
             //    }
+
+            //    PointerUtils.SetHandRayPointerBehavior(PointerBehavior.AlwaysOff, Handedness.Left);
+            //    PointerUtils.SetHandRayPointerBehavior(PointerBehavior.AlwaysOff, Handedness.Right);
 
             //}
             //else
             //{
             //    StartCoroutine(DelayUntilPointerOn());
             //}
-            
+
 
 
 
@@ -378,9 +447,6 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UI
               {
 
 
-                //+++++++
-                //Scroll Mechanics
-                //+++++++  
 
                 
 
