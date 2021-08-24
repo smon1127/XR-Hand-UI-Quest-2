@@ -32,7 +32,7 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UI
         private float scrollbarOffsetX;
         private float scrollbarOffsetXIdle;
 
-        private GameObject scrollingObjectCollection;
+        private GameObject scrollingGameObject;
         public Transform localGridObjectCollection = null;
         public Transform referenceGridObjectCollection = null;
         private ScrollingObjectCollection localScroll;
@@ -62,15 +62,15 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UI
         // Start is called before the first frame update
         
 
-        private IEnumerator Start()
+        private void Start()
         {
             
             //profileItem.Target = frontPlateTarget;
             //profileItem.Themes = frontPlateTheme;
 
-            scrollingObjectCollection = gameObject.transform.parent.gameObject;
+            scrollingGameObject = gameObject.transform.parent.gameObject;
             //IsHover(false);
-            localScroll = scrollingObjectCollection.GetComponent<ScrollingObjectCollection>();
+            localScroll = scrollingGameObject.GetComponent<ScrollingObjectCollection>();
             referenceScroll = referenceGridObjectCollection.transform.parent.transform.parent.gameObject.GetComponent<ScrollingObjectCollection>();
             localScroll.MaskEnabled = true;
 
@@ -89,7 +89,7 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UI
             scrollbarOffsetX = scrollbarOffsetXIdle - ((scrollbarHoverWidth - scrollbarVerticalRectIdle) / 2);
             scrollbarVerticalRect.anchoredPosition = new Vector3(scrollbarOffsetX, 0, 0);
 
-            yield return null;
+            //yield return null;
             scrollbarReferenceRect.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, absolutSliderHeight * 1000);
             scrollbarReferenceRect.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, pageCellWidth * 1000);
             
@@ -108,7 +108,7 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UI
 
             scrollObjectPosition = new List<Transform>(new Transform[hapticTicCollider.Count]);
 
-            Debug.Log("hapticTicCollider.Count: " + hapticTicCollider.Count);
+            //Debug.Log("hapticTicCollider.Count: " + hapticTicCollider.Count);
 
 
             for (int i = 0; i < hapticTicCollider.Count; i++)
@@ -118,7 +118,7 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UI
                 scrollObjectPosition[i] = hapticTicCollider[i].transform.parent.transform;
 
                 //move afterwards to parent "scrollingObjectCollection" to avoid scroll script to disable collider
-                hapticTicCollider[i].transform.SetParent(scrollingObjectCollection.transform);
+                hapticTicCollider[i].transform.SetParent(scrollingGameObject.transform);
             }
 
             //Set scale of haptic Tic Main Collider to size of reference
@@ -206,7 +206,7 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UI
                 PlayHapticSoundOnCollision();
                 
                 StartCoroutine(TicDuration());
-                //Debug.Log("Collision");
+                //Debug.Log("I'm here: Collision");
             }
 
         }
@@ -234,10 +234,12 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UI
 
         public void PlayHapticSoundOnCollision()
         {
+            
             float now = Time.timeSinceLevelLoad;
             if (localScroll.IsDragging && now - lastSoundPlayTime > hapticSound.minSecondsBetweenTicks)
             {
-                
+                //Debug.Log("I'm here: localScroll.IsDragging");
+
                 if (hapticSound.playTickSounds)
                 {
 
@@ -248,9 +250,9 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UI
                     hapticPitch = Mathf.Lerp(hapticSound.scrollLowPitch, hapticSound.scrollHighPitch, normal);
                     hapticSound.PressKeyHapticSample(hapticSound.playHapticSoundPattern);
                     hapticSound.UpdatePitch(hapticSound.playHapticSoundPattern, hapticPitch);
-                    //Debug.Log("Passed Notch");                    
+                    //Debug.Log("I'm here: Passed Notch");                    
                 }
-                
+
                 lastSoundPlayTime = now;
             }
         }

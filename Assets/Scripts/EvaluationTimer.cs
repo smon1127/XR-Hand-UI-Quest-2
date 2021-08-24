@@ -133,45 +133,6 @@ public class EvaluationTimer : MonoBehaviour
     //    }
     //}
 
-    private static string GetAndroidExternalFilesDir()
-    {
-        using (AndroidJavaClass unityPlayer = new AndroidJavaClass("com.unity3d.player.UnityPlayer"))
-        {
-            using (AndroidJavaObject context = unityPlayer.GetStatic<AndroidJavaObject>("currentActivity"))
-            {
-                // Get all available external file directories (emulated and sdCards)
-                AndroidJavaObject[] externalFilesDirectories = context.Call<AndroidJavaObject[]>("getExternalFilesDirs", (object)null);
-                AndroidJavaObject emulated = null;
-                AndroidJavaObject sdCard = null;
-
-                for (int i = 0; i < externalFilesDirectories.Length; i++)
-                {
-                    AndroidJavaObject directory = externalFilesDirectories[i];
-                    using (AndroidJavaClass environment = new AndroidJavaClass("android.os.Environment"))
-                    {
-                        // Check which one is the emulated and which the sdCard.
-                        bool isRemovable = environment.CallStatic<bool>("isExternalStorageRemovable", directory);
-                        bool isEmulated = environment.CallStatic<bool>("isExternalStorageEmulated", directory);
-                        if (isEmulated)
-                            emulated = directory;
-                        else if (isRemovable && isEmulated == false)
-                            sdCard = directory;
-                    }
-                }
-                // Return the sdCard if available
-                if (sdCard != null) { 
-                    Debug.Log("simon1: " + sdCard.Call<string>("getAbsolutePath")); 
-                    return sdCard.Call<string>("getAbsolutePath");
-                }
-                else
-                {
-                    Debug.Log("simon2: " + emulated.Call<string>("getAbsolutePath"));
-                    return emulated.Call<string>("getAbsolutePath");
-                }
-                    
-            }
-        }
-    }
 
     public void WriteData()
     {
@@ -186,7 +147,6 @@ public class EvaluationTimer : MonoBehaviour
         }
         catch (Exception e)
         {
-            print("error path: " + e);
             rootPath = Application.persistentDataPath;
         }
 
@@ -197,7 +157,7 @@ public class EvaluationTimer : MonoBehaviour
         path = Path.Combine(Application.persistentDataPath, filename);
 
 
-        Debug.Log("path: " + path);
+        //Debug.Log("path: " + path);
 
         //check if directory doesn't exit
         if (!Directory.Exists(Path.Combine(Application.persistentDataPath, "")))

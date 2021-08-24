@@ -140,7 +140,7 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UI
             isAudio = toggleAudio.IsToggled;
             isHaptic = toggleHaptics.IsToggled;
 
-            Debug.Log("visual keyboard: " + inputIsActive);
+            //Debug.Log("visual keyboard: " + inputIsActive);
 
             if (Input.GetKeyDown(KeyCode.KeypadEnter))
             {
@@ -246,7 +246,7 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UI
                 toggleUserId.IsToggled = !toggleUserId.IsToggled;
                 nonNativeKeyboard.Close();
             }
-            Debug.Log("inputText: " + inputText);
+            //Debug.Log("inputText: " + inputText);
         }
 
         public void ToggleUserId()

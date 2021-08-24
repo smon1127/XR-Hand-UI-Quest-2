@@ -154,7 +154,7 @@
             {
                 float currentScrollWithOffset = armUiHandler.currentScrollPosition.y + armUiHandler.pageCellHeight;
                 float targetScrollWithOffset = targetScrollPosition.y;
-                Debug.Log("currentScrollWithOffset: " + currentScrollWithOffset);
+                //Debug.Log("currentScrollWithOffset: " + currentScrollWithOffset);
                 if (currentScrollWithOffset > (targetScrollWithOffset - targetThreshold) && currentScrollWithOffset < (targetScrollWithOffset + targetThreshold))
                 {
                     evaluationTimer.StopTimer();                    

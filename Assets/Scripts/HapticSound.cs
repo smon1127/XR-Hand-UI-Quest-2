@@ -218,9 +218,9 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UI
                         Debug.LogError("Failed to load sound signal " + soundFile[numPad]);
                 }
             }else
-            {            
-                
+            {
 
+                //Debug.Log("I'm here: HapticSound no syntacts");
                 if (soundAudioSource.isActiveAndEnabled && hapticAudioSource.isActiveAndEnabled)
                 {
                     //hapticPattern = haptic.playHapticSoundPattern; 
@@ -234,8 +234,10 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UI
             float normal = Mathf.Lerp(0, armSliderHandler.sliderHeight, armScroll.workingScrollerPos.y);
             hapticPitch = Mathf.Lerp(scrollLowPitch, scrollHighPitch, normal);
 
+
             if (armUiHandler.isHaptic)
             {
+                //Debug.Log("I'm here: Play Haptic");
                 hapticAudioSource.PlayOneShot(hapticPattern[numPadEnum]);
                 hapticAudioSource.pitch = hapticPitch;
             }                
@@ -244,6 +246,7 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UI
 
             if (armUiHandler.isAudio)
             {
+                //Debug.Log("I'm here: Play Audio");
                 soundAudioSource.PlayOneShot(soundPattern[numPadEnum]);
                 soundAudioSource.pitch = hapticPitch;
             }

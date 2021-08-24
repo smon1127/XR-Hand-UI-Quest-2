@@ -214,13 +214,13 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UI
         void Start()
         {
             
-            InputDevices.GetDevices(Devices);
-            foreach (var dev in Devices)
-            {
-                Debug.Log(string.Format("Device found with name '{0}' and role '{1}'", dev.name, dev.isValid.ToString()));
-            }
+            //InputDevices.GetDevices(Devices);
+            //foreach (var dev in Devices)
+            //{
+            //    Debug.Log(string.Format("Device found with name '{0}' and role '{1}'", dev.name, dev.isValid.ToString()));
+            //}
 
-            Debug.Log("----------------------------------- " + Devices.Count.ToString());        
+            //Debug.Log("----------------------------------- " + Devices.Count.ToString());        
 
             calibrateSpherePosXRight = -calibrateSphere.transform.position.x;
             calibrateSpherePosXLeft = calibrateSphere.transform.position.x;
@@ -330,7 +330,7 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UI
 
             currentScrollIndex = (int)(currentScrollPosition.y / pageCellHeight);
 
-            Debug.Log("c.index: " + currentScrollIndex + "c.scroll: " + currentScrollPosition + "t.scroll: " + randomizer.targetScrollPosition);
+            //Debug.Log("c.index: " + currentScrollIndex + "c.scroll: " + currentScrollPosition + "t.scroll: " + randomizer.targetScrollPosition);
 
             //if (armScroll.IsTouched)
             //{
