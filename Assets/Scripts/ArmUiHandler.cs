@@ -382,14 +382,7 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UI
                 //Scroll Mechanics
                 //+++++++  
 
-                if (armScroll.IsEngaged)
-                {
-                    worldScroll.ApplyPosition(armScroll.workingScrollerPos);    
-                }
-                else if (worldScroll.IsEngaged)
-                {     
-                    armScroll.ApplyPosition(worldScroll.workingScrollerPos);   
-                }
+                
 
                 //if (armScroll.IsEngaged && armScroll.TryGetPointerPositionOnPlane(out Vector3 currentPointerPos))
                 //{

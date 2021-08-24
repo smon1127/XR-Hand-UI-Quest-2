@@ -105,11 +105,23 @@
             if (scrollObjectCollection.IsDragging)
             {
                 currentScrollPosition = scrollObjectCollection.workingScrollerPos;
-            }else
+                scrollObjectCollectionArm.ApplyPosition(currentScrollPosition);
+
+            }
+            else if (scrollObjectCollectionArm.IsDragging)
             {
                 currentScrollPosition = scrollObjectCollectionArm.workingScrollerPos;
+                scrollObjectCollection.ApplyPosition(currentScrollPosition);
             }
-            
+
+            //if (scrollObjectCollectionArm.IsEngaged)
+            //{
+            //    scrollObjectCollection.ApplyPosition(scrollObjectCollectionArm.workingScrollerPos);
+            //}
+            //else if (scrollObjectCollection.IsEngaged)
+            //{
+            //    scrollObjectCollectionArm.ApplyPosition(scrollObjectCollection.workingScrollerPos);
+            //}
 
             currentScrollIndex = (int)(currentScrollPosition.y/scrollObjectCollection.CellHeight);
         }
