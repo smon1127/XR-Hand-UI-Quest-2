@@ -5,6 +5,7 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UI
     using System.Collections;
     using System.Collections.Generic;
     using UnityEngine;
+    using UnityEngine.UI;
 
     public class ArmSliderHandler : MonoBehaviour
     {
@@ -59,7 +60,9 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UI
         //public List<Theme> frontPlateTheme = null;
 
         // Start is called before the first frame update
-        void Start()
+        
+
+        private IEnumerator Start()
         {
             
             //profileItem.Target = frontPlateTarget;
@@ -78,16 +81,19 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UI
             pageCellHeight = localScroll.CellHeight;
             pageCellWidth = localScroll.CellWidth;
             sliderHeight = (sliderSize * pageCellHeight) - (tiersPerPage * pageCellHeight);
-            absolutSliderHeight = sliderSize * pageCellHeight;            
+            absolutSliderHeight = sliderSize * pageCellHeight;
 
+            
             scrollbarVerticalRectIdle = scrollbarVerticalRect.rect.width;
             scrollbarOffsetXIdle = scrollbarVerticalRect.anchoredPosition.x;
             scrollbarOffsetX = scrollbarOffsetXIdle - ((scrollbarHoverWidth - scrollbarVerticalRectIdle) / 2);
-
-            scrollbarReferenceRect.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, absolutSliderHeight * 1000);
-            scrollbarReferenceRect.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, pageCellWidth * 1000);
             scrollbarVerticalRect.anchoredPosition = new Vector3(scrollbarOffsetX, 0, 0);
 
+            yield return null;
+            scrollbarReferenceRect.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, absolutSliderHeight * 1000);
+            scrollbarReferenceRect.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, pageCellWidth * 1000);
+            
+            //scrollbarVerticalRect.gameObject.GetComponent<Scrollbar>().size = armUiHandler.scrollBarSize;
 
             //select each haptics tic collider from childs     
 
@@ -138,8 +144,7 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UI
 
             
         }
-
-
+       
 
         void Update()
         {

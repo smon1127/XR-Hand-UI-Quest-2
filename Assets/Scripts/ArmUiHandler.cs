@@ -62,6 +62,9 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UI
         [Range(-.05f, .05f)]
         public float togglePositionPalmUpZ = 0f;
 
+        [Range(0f, 1f)]
+        public float scrollBarSize = .5f;
+
 
         [Range(-0.1f, 0.1f)]
         public float hapticLatencyPositionOffset = 0.013f;
