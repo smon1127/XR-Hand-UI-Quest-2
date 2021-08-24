@@ -330,7 +330,7 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UI
 
             currentScrollIndex = (int)(currentScrollPosition.y / pageCellHeight);
 
-            //Debug.Log("c.index: " + currentScrollIndex + "c.scroll: " + currentScrollPosition + "t.scroll: " + randomizer.targetScrollPosition);
+            Debug.Log("c.index: " + currentScrollIndex + "c.scroll: " + currentScrollPosition + "t.scroll: " + randomizer.targetScrollPosition);
 
             //if (armScroll.IsTouched)
             //{
@@ -558,7 +558,7 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UI
                 {
                     scrollIconUpText.color = scrollArowIsDraggingColor;
                     scrollIconDownText.color = scrollArowIsDraggingColor;
-                    scrollBackplateWorldQuad.material.SetColor("_Color", hoverBackplateColor);
+                    //scrollBackplateArmQuad.material.SetColor("_Color", hoverBackplateColor);
                     scrollIconUpText2.color = scrollArowIsDraggingColor;
                     scrollIconDownText2.color = scrollArowIsDraggingColor;
                     scrollBackplateWorldQuad.material.SetColor("_Color", hoverBackplateColor);

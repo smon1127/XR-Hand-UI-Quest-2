@@ -136,6 +136,7 @@ public class EvaluationTimer : MonoBehaviour
 
     public void WriteData()
     {
+
         //GetAndroidExternalFilesDir();
 
         data = String.Format("{0};{1};{2};{3};{4}:{5}:{6};{7};{8};{9};{10};{11};{12};", userId, iteration, firstScrollTime, targetReachedTime, duration.Hours.ToString(), duration.Minutes.ToString(), duration.Seconds.ToString(), isRec.ToString(), isAudio.ToString(), isHaptic.ToString(), errorCount, startTime, endTime);

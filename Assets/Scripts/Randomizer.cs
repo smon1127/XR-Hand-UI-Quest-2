@@ -108,53 +108,52 @@
 
         public void MoveToTargetIndex()
         {            
-            worldScroll.MoveToIndex(currentTargetIndex, true);        
+            worldScroll.MoveToIndex(currentTargetIndex-1, true);        
         }
 
         public void Shuffle()
         {
-            for (int i = 0; i < targetObject.Count; i++)
+            if (worldScroll.isActiveAndEnabled && panelScroll.isActiveAndEnabled)
             {
-                int rnd = Random.Range(i, targetObject.Count);
-                tempGo = targetObject[rnd];
-                targetObject[rnd] = targetObject[i];
-                targetObject[i] = tempGo;
-
-                targetObject[i].SetParent(targetObjectParent[i]);
-                targetObject[i].localPosition = new Vector3(0, 0, 0);
 
 
-                tempGoPanel = targetObjectPanel[rnd];
-                targetObjectPanel[rnd] = targetObjectPanel[i];
-                targetObjectPanel[i] = tempGoPanel;
+                for (int i = 0; i < targetObject.Count; i++)
+                {
+                    int rnd = Random.Range(i, targetObject.Count);
+                    tempGo = targetObject[rnd];
+                    targetObject[rnd] = targetObject[i];
+                    targetObject[i] = tempGo;
 
-                targetObjectPanel[i].SetParent(targetObjectParentPanel[i]);
-                targetObjectPanel[i].localPosition = new Vector3(0, 0, 0);
+                    targetObject[i].SetParent(targetObjectParent[i]);
+                    targetObject[i].localPosition = new Vector3(0, 0, 0);
+
+
+                    tempGoPanel = targetObjectPanel[rnd];
+                    targetObjectPanel[rnd] = targetObjectPanel[i];
+                    targetObjectPanel[i] = tempGoPanel;
+
+                    targetObjectPanel[i].SetParent(targetObjectParentPanel[i]);
+                    targetObjectPanel[i].localPosition = new Vector3(0, 0, 0);
+                }
+                //Define targetObject randomized of last third
+                currentTargetIndex = Random.Range(targetObjectParent.Count / 3 * 2, targetObjectParent.Count - 1);
+
+                //Scroll to y-Position with targetObject in Panel
+
+                targetScrollPosition = new Vector3(0, currentTargetIndex * armUiHandler.pageCellHeight, 0);
+                panelScroll.MoveToIndex(currentTargetIndex, true);
+                worldScroll.MoveToIndex(0, true);
+                armScroll.MoveToIndex(0, true);
             }
-            //Define targetObject randomized of last third
-            currentTargetIndex = Random.Range(targetObjectParent.Count / 3 * 2, targetObjectParent.Count-1);
-
-            //Scroll to y-Position with targetObject in Panel
-            
-            targetScrollPosition = new Vector3(0,currentTargetIndex*armUiHandler.pageCellHeight, 0);
-            panelScroll.MoveToIndex(currentTargetIndex, true);
-            worldScroll.MoveToIndex(0, true);
-            armScroll.MoveToIndex(0, true);
         }
 
         public void SelectTarget()
         {
 
-            if (shuffle)
-            {
-                Shuffle();
-                shuffle = false;                
-            }
-            else
-            {
+            
                 float currentScrollWithOffset = armUiHandler.currentScrollPosition.y + armUiHandler.pageCellHeight;
                 float targetScrollWithOffset = targetScrollPosition.y;
-                //Debug.Log("currentScrollWithOffset: " + currentScrollWithOffset);
+                Debug.Log("currentScrollWithOffset: " + currentScrollWithOffset);
                 if (currentScrollWithOffset > (targetScrollWithOffset - targetThreshold) && currentScrollWithOffset < (targetScrollWithOffset + targetThreshold))
                 {
                     evaluationTimer.StopTimer();                    
@@ -166,7 +165,7 @@
 
                     StartCoroutine(VisualFeedbackTargetSelection(false));
                 }
-            }
+            
         }
             
             
@@ -179,21 +178,23 @@
             if (isRight)
             {
                 selectText.text = "Right";
-                selectBoxQuadMesh.material.SetColor("_Color", selectionCorrectColor);
+                selectBoxQuadMesh.material.SetFloat("_RimPower", .2f);
+                selectBoxQuadMesh.material.SetColor("_RimColor", selectionCorrectColor);
                 yield return new WaitForSeconds(0.5f);
-                shuffle = true;
+                Shuffle();
                 yield return new WaitForSeconds(.01f);
 
             }
             else
             {
                 selectText.text = "Wrong";
-                selectBoxQuadMesh.material.SetColor("_Color", selectionIncorrectColor);
+                selectBoxQuadMesh.material.SetFloat("_RimPower", .2f);
+                selectBoxQuadMesh.material.SetColor("_RimColor", selectionIncorrectColor);
                 yield return new WaitForSeconds(0.5f);
             }
             
             selectText.text = selectTextIdle;
-            selectBoxQuadMesh.material.SetColor("_Color", selectionIdleColor);
+            selectBoxQuadMesh.material.SetFloat("_RimPower", 7.0f);
 
         }
     }
