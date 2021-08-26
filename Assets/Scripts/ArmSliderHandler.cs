@@ -166,10 +166,7 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UI
             {
                 hapticTicCollider[i].transform.position = scrollObjectPosition[i].position;
             }
-        }
-
-        private void LateUpdate()
-        {
+     
             OnTriggerEnter(gameObject.GetComponent<BoxCollider>());
         }
 
