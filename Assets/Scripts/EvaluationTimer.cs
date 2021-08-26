@@ -10,6 +10,8 @@ public class EvaluationTimer : MonoBehaviour
     public int errorCount = 0;
 
     public FeaturesPanelKeyboard featurePanel;
+    public Randomizer randomizer;
+    public ArmUiHandler armUiHandler;
     public DateTime startTime;
     public DateTime endTime;
     public DateTime firstScrollTime;
@@ -43,19 +45,20 @@ public class EvaluationTimer : MonoBehaviour
             isRec = featurePanel.isRec;
             isAudio = featurePanel.isAudio;
             isHaptic = featurePanel.isHaptic;
-        }
-        
+        }        
 
-        if (Input.GetKeyDown("space")){
-            ToggleTimer();
-        }
 
     }
 
     public void StartTimer()
     {
-        firstScrollTime = DateTime.Now;
-        isTimer = true;        
+        if (!isTimer)
+        {
+            firstScrollTime = DateTime.Now;
+            isTimer = true;
+        }
+        
+             
     }
 
     public void StopTimer()
@@ -63,22 +66,14 @@ public class EvaluationTimer : MonoBehaviour
         isTimer = false;
         targetReachedTime = DateTime.Now;
         duration = targetReachedTime - firstScrollTime;
-        iteration++;
+        Debug.Log("isArmScrolling" + armUiHandler.isArmScrolling);
         WriteData();
+        iteration++;
+
         //Debug.Log($"{filename}: {data}");
     }
 
-    public void ToggleTimer()
-    {
-        if (!isTimer)
-        {
-            StartTimer();
-        }
-        else if (isTimer)
-        {
-            StopTimer();
-        }
-    }
+
 
     void OnApplicationQuit()
     {
@@ -139,7 +134,7 @@ public class EvaluationTimer : MonoBehaviour
 
         //GetAndroidExternalFilesDir();
 
-        data = String.Format("{0};{1};{2};{3};{4}:{5}:{6};{7};{8};{9};{10};{11};{12};", userId, iteration, firstScrollTime, targetReachedTime, duration.Hours.ToString(), duration.Minutes.ToString(), duration.Seconds.ToString(), isRec.ToString(), isAudio.ToString(), isHaptic.ToString(), errorCount, startTime, endTime);
+        data = String.Format("{0};{1};{2};{3};{4}:{5}:{6};{7};{8};{9};{10};{11};{12};{13};{14};{15};{16};", userId, iteration, firstScrollTime, targetReachedTime, duration.Hours.ToString(), duration.Minutes.ToString(), duration.Seconds.ToString(), isRec.ToString(), isAudio.ToString(), isHaptic.ToString(), errorCount, startTime, endTime, randomizer.currentTargetIndex, armUiHandler.isArmScrolling.ToString(), armUiHandler.draggingCount, armUiHandler.rightIsDominant.ToString());
 
         try
         {

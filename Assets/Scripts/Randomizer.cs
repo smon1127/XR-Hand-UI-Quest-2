@@ -45,6 +45,7 @@
         public float itemScale = 1;
         public float itemScaleFallOff = .7f;
         public bool shuffle = false;
+        public int isBeginningOnTop = 0;
         public GameObject buttonSelectIdle = null;
         public GameObject buttonSelectShuffle = null;
         
@@ -94,16 +95,6 @@
                 buttonSelectShuffle.SetActive(false);
             }
 
-            
-            if (Input.GetKeyDown(KeyCode.Space))
-                Shuffle();
-
-            if (Input.GetKeyDown(KeyCode.KeypadPlus))
-            {
-                MoveToTargetIndex();
-            }
-
-
         }
 
         public void MoveToTargetIndex()
@@ -135,15 +126,36 @@
                     targetObjectPanel[i].SetParent(targetObjectParentPanel[i]);
                     targetObjectPanel[i].localPosition = new Vector3(0, 0, 0);
                 }
-                //Define targetObject randomized of last third
-                currentTargetIndex = Random.Range(targetObjectParent.Count / 3 * 2, targetObjectParent.Count - 1);
+
+                isBeginningOnTop = Random.Range(0, 2);
+                Debug.Log("targetObjectParent.Count: " + targetObjectParent.Count);
+
+                if (isBeginningOnTop == 0)
+                {
+                    worldScroll.MoveToIndex(0, true);
+                    armScroll.MoveToIndex(0, true);
+                    //Define targetObject randomized of last third
+                    currentTargetIndex = Random.Range(targetObjectParent.Count / 3 * 2, targetObjectParent.Count);
+                }
+                else
+                {
+
+                    worldScroll.MoveToIndex(targetObjectParent.Count, true);
+                    armScroll.MoveToIndex(targetObjectParent.Count, true);
+                    //Define targetObject randomized of first third
+                    currentTargetIndex = Random.Range(1, targetObjectParent.Count / 3);
+                }
+
+                
 
                 //Scroll to y-Position with targetObject in Panel
 
                 targetScrollPosition = new Vector3(0, currentTargetIndex * armUiHandler.pageCellHeight, 0);
                 panelScroll.MoveToIndex(currentTargetIndex, true);
-                worldScroll.MoveToIndex(0, true);
-                armScroll.MoveToIndex(0, true);
+
+                evaluationTimer.StopTimer();
+                armUiHandler.draggingCount = 0;
+                
             }
         }
 

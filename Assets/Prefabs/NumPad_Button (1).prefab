@@ -814,8 +814,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1680324199458645809}
-        m_MethodName: PlayOneShot
+      - m_Target: {fileID: 0}
+        m_MethodName: 
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 8300000, guid: 291bf9326e517b0489c2ee53d0a6a63f,
@@ -840,8 +840,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1680324199458645809}
-        m_MethodName: PlayOneShot
+      - m_Target: {fileID: 0}
+        m_MethodName: 
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 8300000, guid: 40ae713ddf420714bbc1a3b5c3f2eac1,
@@ -1217,7 +1217,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Value: 1
   ShiftValue: 
-  nonNativeKeyboard: {fileID: 0}
 --- !u!1 &6637330141956767657
 GameObject:
   m_ObjectHideFlags: 0

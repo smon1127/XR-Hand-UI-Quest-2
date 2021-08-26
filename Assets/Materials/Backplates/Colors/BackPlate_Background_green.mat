@@ -10,7 +10,7 @@ Material:
   m_Name: BackPlate_Background_green
   m_Shader: {fileID: 4800000, guid: 5bdea20278144b11916d77503ba1467a, type: 3}
   m_ShaderKeywords: _BORDER_LIGHT _BORDER_LIGHT_REPLACES_ALBEDO _DIRECTIONAL_LIGHT
-    _DISABLE_ALBEDO_MAP _IRIDESCENCE _REFRACTION _ROUND_CORNERS _SMOOTHNESS_TEXTURE_ALBEDO_CHANNEL_A
+    _DISABLE_ALBEDO_MAP _IRIDESCENCE _REFRACTION _RIM_LIGHT _ROUND_CORNERS _SMOOTHNESS_TEXTURE_ALBEDO_CHANNEL_A
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 1
   m_DoubleSidedGI: 0
@@ -150,8 +150,8 @@ Material:
     - _Refraction: 1
     - _RefractiveIndex: 0.52
     - _RenderQueueOverride: -1
-    - _RimLight: 0
-    - _RimPower: 0.87
+    - _RimLight: 1
+    - _RimPower: 0.51
     - _RoundCornerMargin: 0
     - _RoundCornerRadius: 0.3
     - _RoundCorners: 1
@@ -191,5 +191,5 @@ Material:
     - _ProximityLightCenterColorOverride: {r: 1, g: 0, b: 0, a: 0}
     - _ProximityLightMiddleColorOverride: {r: 0, g: 1, b: 0, a: 0.5}
     - _ProximityLightOuterColorOverride: {r: 0, g: 0, b: 1, a: 1}
-    - _RimColor: {r: 1, g: 1, b: 1, a: 0.497}
+    - _RimColor: {r: 0.45271537, g: 0.8679245, b: 0.33161268, a: 1}
     - _RoundCornersRadius: {r: 0.5, g: 0.5, b: 0.5, a: 0.5}

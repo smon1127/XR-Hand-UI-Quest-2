@@ -23,13 +23,22 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UI
         //+++++++
 
         [Range(-0.01f, 0.03f)]
-        public float uiOffsetPositionY = 0.0f;
+        public float uiOffsetPositionLeftY = 0.0f;
 
         [Range(-0.12f, 0.04f)]
-        public float uiOffsetPositionX = -0.04f;
+        public float uiOffsetPositionLeftX = -0.04f;
 
         [Range(-0.12f, 0.04f)]
-        public float uiOffsetPositionZ = 0f;
+        public float uiOffsetPositionLeftZ = 0f;
+
+        [Range(-0.01f, 0.03f)]
+        public float uiOffsetPositionRightY = 0.0f;
+
+        [Range(-0.12f, 0.04f)]
+        public float uiOffsetPositionRightX = -0.04f;
+
+        [Range(-0.12f, 0.04f)]
+        public float uiOffsetPositionRightZ = 0f;
 
         [Range(0.25f, 0.75f)]
         public float uiScale = 0.6f;
@@ -77,8 +86,10 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UI
 
         public int hoverItemTierPage = 3;
         public int armHapticPattern = 1;
+        public int draggingCount = 0;
 
-     
+
+
 
         public Vector3 worldUIStartPosition = new Vector3(0,0.1f,0.2f);
         public Vector3 panelStartPosition = new Vector3(0f, 0.3f, 0f);
@@ -109,6 +120,7 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UI
         public bool rightHandIsTracked = false;
         public bool isScrollSnapping = false;
         public bool isPassthrough = false;
+        public bool isArmScrolling = false;
 
         [Range(0f, 0.12f)]
         public float velocityMultiplier = 0.1064f;
@@ -178,6 +190,7 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UI
         public ArmSliderHandler armSliderHandler = null;
         public Interactable buttonSelect;
         public MeshRenderer scrollBackplateQuad;
+        public Transform armLine;
         public PointerBehaviorControls pointerBehavior;
         public Vector3 currentScrollPosition = new Vector3();
         public int currentScrollIndex;
@@ -310,27 +323,37 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UI
         //    PointerUtils.SetHandRayPointerBehavior(PointerBehavior.Default, Handedness.Left);
         //}
 
-
+      
         // Update is called once per frame
         void Update()
         {
             if (worldScroll.IsTouched)
             {
+                
                 currentScrollPosition = worldScroll.workingScrollerPos;
                 armScroll.ApplyPosition(currentScrollPosition);
-
             }
 
-            if (armScroll.IsEngaged)
+            if (worldScroll.IsDragging)
             {
+                isArmScrolling = false;
+            }else if (armScroll.IsDragging)
+            {
+                isArmScrolling = true;
+            }
+            
+           
 
+            if (armScroll.IsTouched)
+            {
+                
                 currentScrollPosition = armScroll.workingScrollerPos;
                 worldScroll.ApplyPosition(currentScrollPosition);
             }
 
             currentScrollIndex = (int)(currentScrollPosition.y / pageCellHeight);
 
-            Debug.Log("c.index: " + currentScrollIndex + "c.scroll: " + currentScrollPosition + "t.scroll: " + randomizer.targetScrollPosition);
+            //Debug.Log("c.index: " + currentScrollIndex + "c.scroll: " + currentScrollPosition + "t.scroll: " + randomizer.targetScrollPosition);
 
             //if (armScroll.IsTouched)
             //{
@@ -503,7 +526,7 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UI
 
 
                 //Positioning UI
-                uiOffset.localPosition = new Vector3(uiOffsetPositionZ, uiOffsetPositionY, uiOffsetPositionX);
+                uiOffset.localPosition = new Vector3(uiOffsetPositionLeftZ, uiOffsetPositionLeftY, uiOffsetPositionLeftX);
                 uiOffset.localScale = new Vector3(uiScale, uiScale, uiScale);
 
                 if (menuIsLeft)
@@ -513,7 +536,7 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UI
                     wrist.position = leftWrist.position;
                     wrist.eulerAngles = leftWrist.eulerAngles;
                     uiOffset.localRotation = Quaternion.Euler(uiOffsetRotationX, -90, 0);
-                    uiOffset.localPosition = new Vector3(uiOffsetPositionZ, uiOffsetPositionY, uiOffsetPositionX);
+                    uiOffset.localPosition = new Vector3(uiOffsetPositionLeftZ, uiOffsetPositionLeftY, uiOffsetPositionLeftX);
                     
                 }
                 else
@@ -524,7 +547,7 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UI
                     wrist.eulerAngles = rightWrist.eulerAngles;
                     float normal = Mathf.Lerp(60, 140, Mathf.InverseLerp(105, 45, uiOffsetRotationX));
                     uiOffset.localRotation = Quaternion.Euler(normal, -90, 0);
-                    uiOffset.localPosition = new Vector3(uiOffsetPositionZ, (float)(uiOffsetPositionY * 1.1), uiOffsetPositionX);
+                    uiOffset.localPosition = new Vector3(uiOffsetPositionRightZ, uiOffsetPositionRightY, uiOffsetPositionRightX);
                     //if (!isPalmUp)
                     //{
                     //    menuToggle.transform.localPosition = new Vector3(-togglePositionX, (float)(togglePositionY * 1.1), togglePositionZ);
@@ -551,6 +574,14 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UI
                 else
                 {
                     scrollBackplateQuad.material.SetFloat("_BorderWidth", 0.2f);
+                }
+
+                if (armScroll.IsDragging)
+                {
+                    armLine.localScale = new Vector3(0.003f, armLine.localScale.y, armLine.localScale.z);                 
+                }else
+                {
+                    armLine.localScale = new Vector3(0.0005f, armLine.localScale.y, armLine.localScale.z);
                 }
 
 
@@ -645,8 +676,11 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UI
             else
                 Debug.LogError("Couldn't find OVRHandPrefab_Left or OVRHandPrefab_Right. Please connect your Headset");
         }
-        
 
+        public void AddDraggingCount()
+        {
+            draggingCount++;
+        }
         public void ToggleSwitch()
         {
             if (pinchSliderSwitch.SliderValue < 1)

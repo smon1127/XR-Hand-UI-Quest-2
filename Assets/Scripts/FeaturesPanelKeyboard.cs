@@ -28,17 +28,14 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UI
 
         public Interactable buttonIteration = null;
 
-        public Interactable toggleScores = null;
-
         public Interactable toggleHome = null;
 
         public Interactable toggleSettings = null;
 
         public GameObject settingsPanel = null;
         public GameObject homePanel = null;
+        public Interactable toggleHandedness = null;
 
-
-        public Interactable buttonShuffle = null;
 
         public TextMeshPro userIdText;
         public TextMeshPro iterationText;
@@ -63,7 +60,7 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UI
         public GameObject anchors = null;
         public GameObject calibrateArea = null;
         private bool firstTime = true;
-
+        public Randomizer randomizer;
         private GameObject localAvatar = null;
         private GameObject cameraRig = null;
         private OVRPassthroughLayer passthroughLayer = null;
@@ -78,10 +75,11 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UI
 
             togglePassthrough.IsToggled = armUiHandler.isPassthrough;
             userIdText.text = userId.ToString();
-            targetObject.SetActive(false);
             gameObject.SetActive(true);
+            targetObject.SetActive(true);
             anchors.SetActive(false);
             firstTime = true;
+            ToggleOptions(2);
         }
 
         private void Update()
@@ -123,18 +121,9 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UI
                 armUiHandler.isHaptic = toggleHaptics.IsToggled;
                 armUiHandler.isAudio = toggleAudio.IsToggled;
             }
-           
 
-            if (nonNativeKeyboard.isActiveAndEnabled)
-            {
-                inputIsActive = true;
-                targetObject.SetActive(false);
-            }
-            else
-            {
-                inputIsActive = false;
-                targetObject.SetActive(true);
-            }
+            inputIsActive = nonNativeKeyboard.isActiveAndEnabled;
+            
 
             isRec = toggleRec.IsToggled;
             isAudio = toggleAudio.IsToggled;
@@ -142,7 +131,7 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UI
 
             //Debug.Log("visual keyboard: " + inputIsActive);
 
-            if (Input.GetKeyDown(KeyCode.KeypadEnter))
+            if (Input.GetKeyDown(KeyCode.KeypadEnter)|| Input.GetKeyDown(KeyCode.Return))
             {
                 OnSubmit();
             }
@@ -150,6 +139,10 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UI
             iteration = evaluationTimer.iteration;
             iterationText.text = iteration.ToString();
 
+            if (Input.GetKeyDown(KeyCode.Keypad0) && !inputIsActive)
+            {
+                toggleRec.IsToggled = !toggleRec.IsToggled;
+            }
 
             if (Input.GetKeyDown(KeyCode.Keypad1) && !inputIsActive)
             {
@@ -159,43 +152,53 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UI
 
             if (Input.GetKeyDown(KeyCode.Keypad2) && !inputIsActive)
             {
-                toggleRec.IsToggled = !toggleRec.IsToggled;
+                toggleHandedness.IsToggled = !toggleHandedness.IsToggled;
+                armUiHandler.ToggleRightIsDominant();
             }
 
             if (Input.GetKeyDown(KeyCode.Keypad3) && !inputIsActive)
             {
-                toggleAudio.IsToggled = !toggleAudio.IsToggled;
+                togglePassthrough.IsToggled = !togglePassthrough.IsToggled; 
+                
             }
 
             if (Input.GetKeyDown(KeyCode.Keypad4) && !inputIsActive)
             {
-                toggleHaptics.IsToggled = !toggleHaptics.IsToggled;
+                randomizer.MoveToTargetIndex();              
             }
 
             if (Input.GetKeyDown(KeyCode.Keypad5) && !inputIsActive)
             {
-                togglePassthrough.IsToggled = !togglePassthrough.IsToggled;
+                toggleAudio.IsToggled = !toggleAudio.IsToggled;
             }
 
             if (Input.GetKeyDown(KeyCode.Keypad6) && !inputIsActive)
             {
-                buttonIteration.TriggerOnClick();
+                toggleHaptics.IsToggled = !toggleHaptics.IsToggled;
             }
 
             if (Input.GetKeyDown(KeyCode.Keypad7) && !inputIsActive)
             {
-                toggleScores.IsToggled = !toggleScores.IsToggled;
+                
             }
 
             if (Input.GetKeyDown(KeyCode.Keypad8) && !inputIsActive)
             {
             
-            }
+            }          
 
             if (Input.GetKeyDown(KeyCode.KeypadMinus) && !inputIsActive)
             {
-                buttonShuffle.TriggerOnClick();
+                toggleHome.IsToggled = !toggleHome.IsToggled;
+                ToggleOptions(1);
             }
+
+            if (Input.GetKeyDown(KeyCode.KeypadPlus) && !inputIsActive)
+            {
+                ToggleOptions(2);
+                toggleSettings.IsToggled = !toggleSettings.IsToggled;
+            }
+
         }
     
         public void ToggleOptions(int buttonNum)
