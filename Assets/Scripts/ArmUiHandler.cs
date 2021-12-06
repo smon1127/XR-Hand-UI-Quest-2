@@ -255,7 +255,8 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UI
             {
                 leftHandIsTracked = handJointService.IsHandTracked(Handedness.Left);
                 rightHandIsTracked = handJointService.IsHandTracked(Handedness.Left);
-            }
+            }           
+
 
             if (debug)
             {

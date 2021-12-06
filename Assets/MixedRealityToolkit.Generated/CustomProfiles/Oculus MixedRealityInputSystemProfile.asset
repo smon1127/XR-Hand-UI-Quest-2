@@ -86,9 +86,9 @@ MonoBehaviour:
   speechCommandsProfile: {fileID: 11400000, guid: 4e8ea5ea9e2f55c4f970a2ccb41b681a,
     type: 2}
   enableControllerMapping: 1
-  controllerMappingProfile: {fileID: 11400000, guid: 39ded1fd0711a0c448413d0e1ec4f7f3,
+  controllerMappingProfile: {fileID: 11400000, guid: 8b27c46ed0be65d43a8f9ccfff3eeebb,
     type: 2}
-  controllerVisualizationProfile: {fileID: 11400000, guid: d9ee3d709133f504a8d76410d0135d17,
+  controllerVisualizationProfile: {fileID: 11400000, guid: 0ceb2b797fbe84349b50dbf6f5230bef,
     type: 2}
   handTrackingProfile: {fileID: 11400000, guid: 282758020af8a3e4e9b0c4373772cc42,
     type: 2}

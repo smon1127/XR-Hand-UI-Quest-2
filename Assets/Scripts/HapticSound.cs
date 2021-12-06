@@ -16,7 +16,7 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UI
         public string[] soundFile = new string[] { "", "", "", "", "", "", "", "", "" };
         public AudioClip[] soundPattern;
         public AudioClip[] hapticPattern;
-
+        public ArduinoSerialConnect arduinoSerialConnect;
 
         [Tooltip("Lowest Frequency (Hz) for haptic Feedback when scrolling")]
         public float scrollLowPitch = .75f;
@@ -31,6 +31,7 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UI
         [Tooltip("Whether to play 'tick tick' sounds as the slider passes notches")]
         public bool playTickSounds = true;
         public bool hapticThroughSyntacts = false;
+        public bool hapticThroughTACHAMMER = false;
 
         [SerializeField]
         public float minSecondsBetweenTicks = 0.01f;
@@ -217,7 +218,54 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UI
                     else
                         Debug.LogError("Failed to load sound signal " + soundFile[numPad]);
                 }
-            }else
+            }else if (hapticThroughTACHAMMER)
+            {
+                arduinoSerialConnect.serial.Write("A");
+                if (armUiHandler.isHaptic)
+                {
+                    if (customHaptic[numPad])
+                    {
+                        //Debug.Log("Enter custom haptics");
+                        Signal customHaptic = new Sine(customHapticDesign[numPad].x) * new ASR(customHapticDesign[numPad].y, customHapticDesign[numPad].y, customHapticDesign[numPad].y);
+                        syntactsHub.session.Play(hapticsChannel, customHaptic);
+                        //Debug.Log("customHaptic" + customHapticDesign[numPad].ToString("F2"));
+                        //Debug.Log("Play haptic: " + hapticsChannel + customHaptic);
+                    }
+                    else
+                    {
+                        //Debug.Log("soundFile: " + soundFile[numPad] + ", hapticFile:" + hapticFile[numPad]);
+
+                        Signal hapticSig;
+                        if (Syntacts.Library.LoadSignal(out hapticSig, hapticFile[numPad]))
+                        {
+                            syntactsHub.session.Play(hapticsChannel, hapticSig);
+                            //Debug.Log("Play haptic: " + hapticsChannel + customHaptic);
+                        }
+                        else if (hapticFile[numPad] == "")
+                            return;
+                        else
+                            Debug.LogError("Failed to load haptic signal " + hapticFile[numPad]);
+                    }
+                }
+
+                if (armUiHandler.isAudio)
+                {
+
+                    Signal soundSig;
+                    if (Syntacts.Library.LoadSignal(out soundSig, soundFile[numPad]))
+                    {
+                        //Debug.Log("Enter soundfile");
+                        syntactsHub.session.Play(soundChannel, soundSig);
+                        //Debug.Log("Play sound: " + soundChannel + soundSig);
+                    }
+                    else if (soundFile[numPad] == "")
+                        return;
+                    else
+                        Debug.LogError("Failed to load sound signal " + soundFile[numPad]);
+                }
+
+            }
+            else
             {
 
                 //Debug.Log("I'm here: HapticSound no syntacts");
