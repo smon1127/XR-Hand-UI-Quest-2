@@ -466,6 +466,12 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UI
             }
 
 
+
+         
+
+
+            //Get hand Element Rotations and Positions
+
             IMixedRealityHandJointService handJointService = CoreServices.GetInputSystemDataProvider<IMixedRealityHandJointService>();
             if (handJointService != null)
               {
