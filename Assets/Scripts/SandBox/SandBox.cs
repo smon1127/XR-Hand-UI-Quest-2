@@ -19,9 +19,9 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UI
 
         [Header("Tick Notch Sounds")]
 
-        [SerializeField]
-        [Tooltip("Whether to play 'tick tick' sounds as the slider passes notches")]
-        private bool playTickSounds = true;
+        //[SerializeField]
+        //[Tooltip("Whether to play 'tick tick' sounds as the slider passes notches")]
+        //private bool playTickSounds = true;
 
         [SerializeField]
         [Tooltip("Sound to play when slider passes a notch")]

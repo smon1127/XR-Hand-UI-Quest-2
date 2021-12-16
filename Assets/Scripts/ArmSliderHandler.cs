@@ -42,10 +42,10 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UI
         public List<GameObject> hapticTicCollider = new List<GameObject>();
         public List<Transform> scrollObjectPosition;
         string hapticTicColliderTag = "hapticTicCollider";
-        string quadTag = "quad";
+        //string quadTag = "quad";
         
 
-        int armSelectionCount = 0;
+        //int armSelectionCount = 0;
         int sliderSize;
         int tiersPerPage;
         float pageCellHeight;

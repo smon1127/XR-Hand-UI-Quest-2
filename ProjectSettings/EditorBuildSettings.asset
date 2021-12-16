@@ -4,16 +4,8 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes:
-  - enabled: 1
-    path: Assets/Scenes/XRHandMenu11.unity
-    guid: b158c2346409fd14aa4719df74db321d
+  m_Scenes: []
   m_configObjects:
-    Unity.XR.Oculus.Settings: {fileID: 11400000, guid: af7250b1d9856f14d846181a90557904,
-      type: 2}
-    Unity.XR.WindowsMR.Settings: {fileID: 11400000, guid: c355853a0a74c8d44bc181fb15915d81,
-      type: 2}
-    com.unity.xr.management.loader_settings: {fileID: 11400000, guid: a0012c7fbe4d762498e71a7641d0f669,
-      type: 2}
-    com.unity.xr.openxr.settings4: {fileID: 11400000, guid: f3fbaaafb6bb08140964810cc3e07b29,
-      type: 2}
+    Unity.XR.Oculus.Settings: {fileID: 11400000, guid: d45250753de059d4494a7afbfaecab0e, type: 2}
+    com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 55fbf341a3c59a246a900ca43402942f, type: 2}
+    com.unity.xr.openxr.settings4: {fileID: 11400000, guid: dc5a86bcdc0b4e2409241bc057a477f5, type: 2}

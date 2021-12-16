@@ -12,8 +12,8 @@ using Microsoft.MixedReality.Toolkit.Input;
 
 public class HeadRig : MonoBehaviour
 {
-    private InputDevice LeftController = new InputDevice();
-    private InputDevice RightController = new InputDevice();
+    //private InputDevice LeftController = new InputDevice();
+   // private InputDevice RightController = new InputDevice();
     private List<InputDevice> Devices = new List<InputDevice>();
     private Vector3 RightHandPos;
     private float RightHandTrigger;

@@ -18,16 +18,11 @@ MonoBehaviour:
     reference: Microsoft.MixedReality.Toolkit.Input.WindowsMixedRealityControllerVisualizer,
       Microsoft.MixedReality.Toolkit.SDK
   usePlatformModels: 1
-  platformModelMaterial: {fileID: 2100000, guid: 54322026142964d4084eda2478d9b1a2,
-    type: 2}
-  globalLeftControllerModel: {fileID: 1370450866519632, guid: 626257b1a6cd47c2a32a18cf75b2fb23,
-    type: 3}
-  globalRightControllerModel: {fileID: 1760394390528354, guid: 9ef0df44319c4fb4a05649e5b8ceb6d1,
-    type: 3}
-  globalLeftHandVisualizer: {fileID: 61451597023024772, guid: 6080fb9e3b49fda449e3d70daf6d2254,
-    type: 3}
-  globalRightHandVisualizer: {fileID: 3512491064599439886, guid: 7a857af0cb85b4a47b6ec8a1babcb73c,
-    type: 3}
+  platformModelMaterial: {fileID: 2100000, guid: 54322026142964d4084eda2478d9b1a2, type: 2}
+  globalLeftControllerModel: {fileID: 1370450866519632, guid: 626257b1a6cd47c2a32a18cf75b2fb23, type: 3}
+  globalRightControllerModel: {fileID: 1760394390528354, guid: 9ef0df44319c4fb4a05649e5b8ceb6d1, type: 3}
+  globalLeftHandVisualizer: {fileID: 61451597023024772, guid: 6080fb9e3b49fda449e3d70daf6d2254, type: 3}
+  globalRightHandVisualizer: {fileID: 3512491064599439886, guid: 7a857af0cb85b4a47b6ec8a1babcb73c, type: 3}
   controllerVisualizationSettings:
   - description: HP Motion Controller
     controllerType:
@@ -47,8 +42,7 @@ MonoBehaviour:
     handedness: 3
     usePlatformModels: 0
     platformModelMaterial: {fileID: 0}
-    overrideModel: {fileID: 1227372834072826, guid: 378f91dbbff9e2343b27a467467750bf,
-      type: 3}
+    overrideModel: {fileID: 1227372834072826, guid: 378f91dbbff9e2343b27a467467750bf, type: 3}
     controllerVisualizationType:
       reference: Microsoft.MixedReality.Toolkit.Input.BaseHandVisualizer, Microsoft.MixedReality.Toolkit
   - description: HP Motion Controller
@@ -69,8 +63,7 @@ MonoBehaviour:
     handedness: 3
     usePlatformModels: 0
     platformModelMaterial: {fileID: 0}
-    overrideModel: {fileID: 1227372834072826, guid: 378f91dbbff9e2343b27a467467750bf,
-      type: 3}
+    overrideModel: {fileID: 1227372834072826, guid: 378f91dbbff9e2343b27a467467750bf, type: 3}
     controllerVisualizationType:
       reference: Microsoft.MixedReality.Toolkit.Input.BaseHandVisualizer, Microsoft.MixedReality.Toolkit
   - description: Microsoft Articulated Hand
@@ -80,8 +73,7 @@ MonoBehaviour:
     handedness: 3
     usePlatformModels: 0
     platformModelMaterial: {fileID: 0}
-    overrideModel: {fileID: 1227372834072826, guid: 378f91dbbff9e2343b27a467467750bf,
-      type: 3}
+    overrideModel: {fileID: 1227372834072826, guid: 378f91dbbff9e2343b27a467467750bf, type: 3}
     controllerVisualizationType:
       reference: Microsoft.MixedReality.Toolkit.Input.BaseHandVisualizer, Microsoft.MixedReality.Toolkit
   - description: Microsoft Motion Controller
@@ -112,9 +104,8 @@ MonoBehaviour:
         Microsoft.MixedReality.Toolkit.Providers.XRSDK.Oculus
     handedness: 3
     usePlatformModels: 0
-    platformModelMaterial: {fileID: 2100000, guid: d7292a5e1ae17a64c95f3081d2c6be5a,
-      type: 2}
-    overrideModel: {fileID: 112276, guid: d9809c5e8418bb047bf2c8ba1d1a2cec, type: 3}
+    platformModelMaterial: {fileID: 2100000, guid: d7292a5e1ae17a64c95f3081d2c6be5a, type: 2}
+    overrideModel: {fileID: 112276, guid: 2fcf35f142646c34c8f22cc733dcfdd5, type: 3}
     controllerVisualizationType:
       reference: Microsoft.MixedReality.Toolkit.Input.WindowsMixedRealityControllerVisualizer,
         Microsoft.MixedReality.Toolkit.SDK

@@ -30,7 +30,7 @@ public class SetTrackingType : MonoBehaviour
 
     private void Awake()
     {
-        XRDevice.SetTrackingSpaceType(TrackingSpaceType.RoomScale);
+        //XRDevice.SetTrackingSpaceType(TrackingSpaceType.RoomScale);
     }
 
     //Helper function to find the correct instances of OVRCameraRig and CentreEyeAnchor

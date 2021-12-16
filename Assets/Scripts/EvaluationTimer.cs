@@ -141,7 +141,7 @@ public class EvaluationTimer : MonoBehaviour
             rootPath = Application.persistentDataPath.Substring(0, Application.persistentDataPath.IndexOf("Android", StringComparison.Ordinal));
 
         }
-        catch (Exception e)
+        catch (Exception)
         {
             rootPath = Application.persistentDataPath;
         }
