@@ -31,9 +31,9 @@ MonoBehaviour:
   useHeadGazeOverride: 0
   isEyeTrackingEnabled: 1
   pointerOptions:
-  - controllerType: 5167
+  - controllerType: 5231
     handedness: 7
-    pointerPrefab: {fileID: 1247086986094436, guid: d5b94136462644c9873bb3347169ae7e,
+    pointerPrefab: {fileID: 1247086986094436, guid: 10903f7cb84819140af2f33b28df6fcc,
       type: 3}
   - controllerType: 5167
     handedness: 7
@@ -47,11 +47,7 @@ MonoBehaviour:
     handedness: 7
     pointerPrefab: {fileID: 1247086986094436, guid: 31d81f88cf3f71d4b8392ded50df3f05,
       type: 3}
-  - controllerType: 1024
-    handedness: 7
-    pointerPrefab: {fileID: 1507865967819406, guid: 38b548c6a2c270545a383296ad2bc4d5,
-      type: 3}
-  - controllerType: 1024
+  - controllerType: 1088
     handedness: 7
     pointerPrefab: {fileID: 1507865967819406, guid: c2fde7a8938065b459cff79b8ed89393,
       type: 3}

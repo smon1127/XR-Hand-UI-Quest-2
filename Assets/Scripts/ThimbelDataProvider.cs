@@ -13,7 +13,7 @@ public class ThimbelDataProvider : InputSystemGlobalHandlerListener, IMixedReali
     public MixedRealityInputAction inputAction;
 
     [SerializeField] private bool thimbelTouched = false;
-
+    private bool isActive = false;
 
     public KeyCode[] btn = new KeyCode[] {KeyCode.JoystickButton0, KeyCode.JoystickButton1, KeyCode.JoystickButton2};
 
@@ -26,7 +26,7 @@ public class ThimbelDataProvider : InputSystemGlobalHandlerListener, IMixedReali
     }
     public ActiveThimbel activeThimbel;
 
-   
+
 
     private void Update()
     {
@@ -46,12 +46,18 @@ public class ThimbelDataProvider : InputSystemGlobalHandlerListener, IMixedReali
             activeThimbel ^= ActiveThimbel.thimbel2;
         }
 
+        if (Input.GetKeyDown(KeyCode.Keypad3))
+        {
+            activeThimbel ^= ActiveThimbel.thimbel0;
+            activeThimbel ^= ActiveThimbel.thimbel1;
+            activeThimbel ^= ActiveThimbel.thimbel2;
+        }
 
 
         // Don´t get confused. (int)activeThimble displays the flag value. Check following Debug to understand.
-        Debug.Log("activeThimbel: " + (int)activeThimbel);
+        //Debug.Log("activeThimbel: " + (int)activeThimbel);
 
-        if ((int)activeThimbel == 7)
+        if ((int)activeThimbel == 7 || (int)activeThimbel == -1)
         {
             if (Input.GetKey(btn[0]) || Input.GetKey(btn[1]) || Input.GetKey(btn[2]))
             {
@@ -62,9 +68,10 @@ public class ThimbelDataProvider : InputSystemGlobalHandlerListener, IMixedReali
                 ActivateButton(false);
             }
 
-        }else if ((int)activeThimbel == 3)
+        }
+        else if ((int)activeThimbel == 3)
         {
-            if(Input.GetKey(btn[0]) || Input.GetKey(btn[1]))
+            if (Input.GetKey(btn[0]) || Input.GetKey(btn[1]))
             {
                 ActivateButton(true);
             }
@@ -72,8 +79,9 @@ public class ThimbelDataProvider : InputSystemGlobalHandlerListener, IMixedReali
             {
                 ActivateButton(false);
             }
-                
-        }else if ((int)activeThimbel == 6)
+
+        }
+        else if ((int)activeThimbel == 6)
         {
             if (Input.GetKey(btn[1]) || Input.GetKey(btn[2]))
             {
@@ -84,7 +92,8 @@ public class ThimbelDataProvider : InputSystemGlobalHandlerListener, IMixedReali
                 ActivateButton(false);
             }
 
-        }else if ((int)activeThimbel == 5)
+        }
+        else if ((int)activeThimbel == 5)
         {
             if (Input.GetKey(btn[0]) || Input.GetKey(btn[2]))
             {
@@ -95,7 +104,8 @@ public class ThimbelDataProvider : InputSystemGlobalHandlerListener, IMixedReali
                 ActivateButton(false);
             }
 
-        }else if ((int)activeThimbel == 1)
+        }
+        else if ((int)activeThimbel == 1)
         {
             if (Input.GetKey(btn[0]))
             {
@@ -106,7 +116,8 @@ public class ThimbelDataProvider : InputSystemGlobalHandlerListener, IMixedReali
                 ActivateButton(false);
             }
 
-        }else if ((int)activeThimbel == 2)
+        }
+        else if ((int)activeThimbel == 2)
         {
             if (Input.GetKey(btn[1]))
             {
@@ -117,7 +128,8 @@ public class ThimbelDataProvider : InputSystemGlobalHandlerListener, IMixedReali
                 ActivateButton(false);
             }
 
-        }else if ((int)activeThimbel == 4)
+        }
+        else if ((int)activeThimbel == 4)
         {
             if (Input.GetKey(btn[2]))
             {
@@ -127,13 +139,14 @@ public class ThimbelDataProvider : InputSystemGlobalHandlerListener, IMixedReali
             {
                 ActivateButton(false);
             }
-        }else
+        }
+        else
         {
             ActivateButton(false);
         }
 
 
-        
+
     }
 
     public void ActivateButton(bool isActive)
@@ -146,10 +159,12 @@ public class ThimbelDataProvider : InputSystemGlobalHandlerListener, IMixedReali
                 if (isActive)
                 {
                     CoreServices.InputSystem?.RaiseOnInputDown(controller.InputSource, Handedness.Any, inputAction);
+                    Debug.Log("Input down with Thimbel Flag: " + (int)activeThimbel);
                 }
                 else
                 {
                     CoreServices.InputSystem?.RaiseOnInputUp(controller.InputSource, Handedness.Any, inputAction);
+                    //Debug.Log("RaiseOnInputUp");
                 }
             }
         }
@@ -158,11 +173,13 @@ public class ThimbelDataProvider : InputSystemGlobalHandlerListener, IMixedReali
     #region On Input Up/Down
     public void OnInputUp(InputEventData eventData)
     {
+
         if (eventData.MixedRealityInputAction == outputAction) thimbelTouched = false;
     }
 
     public void OnInputDown(InputEventData eventData)
     {
+
         if (eventData.MixedRealityInputAction == outputAction) thimbelTouched = true;
     }
     #endregion
@@ -177,5 +194,7 @@ public class ThimbelDataProvider : InputSystemGlobalHandlerListener, IMixedReali
     {
 
     }
+
+  
     #endregion
 }

@@ -26,9 +26,6 @@ MonoBehaviour:
   - id: 4
     description: Pointer Pose
     axisConstraint: 7
-  - id: 5
-    description: Teleport Direction
-    axisConstraint: 4
   - id: 6
     description: Trigger
     axisConstraint: 3
@@ -58,4 +55,28 @@ MonoBehaviour:
     axisConstraint: 0
   - id: 15
     description: Toggle Profiler
+    axisConstraint: 0
+  - id: 16
+    description: New Action 16
+    axisConstraint: 0
+  - id: 17
+    description: New Action 17
+    axisConstraint: 0
+  - id: 18
+    description: New Action 18
+    axisConstraint: 0
+  - id: 18
+    description: New Action 18
+    axisConstraint: 0
+  - id: 19
+    description: New Action 19
+    axisConstraint: 0
+  - id: 20
+    description: New Action 20
+    axisConstraint: 0
+  - id: 21
+    description: New Action 21
+    axisConstraint: 0
+  - id: 22
+    description: New Action 22
     axisConstraint: 0
