@@ -9,8 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 488160}
-  - component: {fileID: -5583994059601695926}
   - component: {fileID: 8583976159511316666}
+  - component: {fileID: 1549206811748982660}
   m_Layer: 0
   m_Name: MRTK-OVRControllerPrefab
   m_TagString: Untagged
@@ -38,25 +38,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &-5583994059601695926
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 112276}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 237d050b235a9e343a85d5fc8996a4b1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_modelOculusTouchQuestAndRiftSLeftController: {fileID: 2774251407684647364}
-  m_modelOculusTouchQuestAndRiftSRightController: {fileID: 2114446122515339833}
-  m_modelOculusTouchRiftLeftController: {fileID: 6871378272464032995}
-  m_modelOculusTouchRiftRightController: {fileID: 5342833014125450273}
-  m_modelOculusTouchQuest2LeftController: {fileID: 4828818719732477346}
-  m_modelOculusTouchQuest2RightController: {fileID: 3092784099471880361}
-  m_controller: 3
 --- !u!114 &8583976159511316666
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -76,6 +57,25 @@ MonoBehaviour:
     description: None
     axisConstraint: 0
   handedness: 2
+--- !u!114 &1549206811748982660
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 112276}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aed62bf3ae2456c408f247f96808ce96, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_modelOculusTouchQuestAndRiftSLeftController: {fileID: 2774251407684647364}
+  m_modelOculusTouchQuestAndRiftSRightController: {fileID: 2114446122515339833}
+  m_modelOculusTouchRiftLeftController: {fileID: 6871378272464032995}
+  m_modelOculusTouchRiftRightController: {fileID: 5342833014125450273}
+  m_modelOculusTouchQuest2LeftController: {fileID: 4828818719732477346}
+  m_modelOculusTouchQuest2RightController: {fileID: 3092784099471880361}
+  m_controller: 2
 --- !u!1001 &2114446122515373209
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -139,12 +139,14 @@ PrefabInstance:
   m_SourcePrefab: {fileID: 100100000, guid: 37ba10a26a648144fa2390c8adfb2c8a, type: 3}
 --- !u!1 &2114446122515339833 stripped
 GameObject:
-  m_CorrespondingSourceObject: {fileID: 100000, guid: 37ba10a26a648144fa2390c8adfb2c8a, type: 3}
+  m_CorrespondingSourceObject: {fileID: 100000, guid: 37ba10a26a648144fa2390c8adfb2c8a,
+    type: 3}
   m_PrefabInstance: {fileID: 2114446122515373209}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &2114446122515498521 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: 400000, guid: 37ba10a26a648144fa2390c8adfb2c8a, type: 3}
+  m_CorrespondingSourceObject: {fileID: 400000, guid: 37ba10a26a648144fa2390c8adfb2c8a,
+    type: 3}
   m_PrefabInstance: {fileID: 2114446122515373209}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2774251407684550500
@@ -210,12 +212,14 @@ PrefabInstance:
   m_SourcePrefab: {fileID: 100100000, guid: 32fbc8bcebb64584da5868aeeb086cda, type: 3}
 --- !u!1 &2774251407684647364 stripped
 GameObject:
-  m_CorrespondingSourceObject: {fileID: 100000, guid: 32fbc8bcebb64584da5868aeeb086cda, type: 3}
+  m_CorrespondingSourceObject: {fileID: 100000, guid: 32fbc8bcebb64584da5868aeeb086cda,
+    type: 3}
   m_PrefabInstance: {fileID: 2774251407684550500}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &2774251407684675044 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: 400000, guid: 32fbc8bcebb64584da5868aeeb086cda, type: 3}
+  m_CorrespondingSourceObject: {fileID: 400000, guid: 32fbc8bcebb64584da5868aeeb086cda,
+    type: 3}
   m_PrefabInstance: {fileID: 2774251407684550500}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3092784099471848987
@@ -281,12 +285,14 @@ PrefabInstance:
   m_SourcePrefab: {fileID: 100100000, guid: 25b5eb0761edb6346b0b3444af76b55e, type: 3}
 --- !u!1 &3092784099471880361 stripped
 GameObject:
-  m_CorrespondingSourceObject: {fileID: 100018, guid: 25b5eb0761edb6346b0b3444af76b55e, type: 3}
+  m_CorrespondingSourceObject: {fileID: 100018, guid: 25b5eb0761edb6346b0b3444af76b55e,
+    type: 3}
   m_PrefabInstance: {fileID: 3092784099471848987}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &3092784099471453321 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: 400018, guid: 25b5eb0761edb6346b0b3444af76b55e, type: 3}
+  m_CorrespondingSourceObject: {fileID: 400018, guid: 25b5eb0761edb6346b0b3444af76b55e,
+    type: 3}
   m_PrefabInstance: {fileID: 3092784099471848987}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &4828818719732443922
@@ -352,12 +358,14 @@ PrefabInstance:
   m_SourcePrefab: {fileID: 100100000, guid: 8b83018900d13bb4f8e0ad895cb004e5, type: 3}
 --- !u!1 &4828818719732477346 stripped
 GameObject:
-  m_CorrespondingSourceObject: {fileID: 100016, guid: 8b83018900d13bb4f8e0ad895cb004e5, type: 3}
+  m_CorrespondingSourceObject: {fileID: 100016, guid: 8b83018900d13bb4f8e0ad895cb004e5,
+    type: 3}
   m_PrefabInstance: {fileID: 4828818719732443922}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &4828818719732838786 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: 400016, guid: 8b83018900d13bb4f8e0ad895cb004e5, type: 3}
+  m_CorrespondingSourceObject: {fileID: 400016, guid: 8b83018900d13bb4f8e0ad895cb004e5,
+    type: 3}
   m_PrefabInstance: {fileID: 4828818719732443922}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &5342833014125417103
@@ -423,12 +431,14 @@ PrefabInstance:
   m_SourcePrefab: {fileID: 100100000, guid: c3798d66af7bbe54bbfe22a3b302300b, type: 3}
 --- !u!1 &5342833014125450273 stripped
 GameObject:
-  m_CorrespondingSourceObject: {fileID: 100014, guid: c3798d66af7bbe54bbfe22a3b302300b, type: 3}
+  m_CorrespondingSourceObject: {fileID: 100014, guid: c3798d66af7bbe54bbfe22a3b302300b,
+    type: 3}
   m_PrefabInstance: {fileID: 5342833014125417103}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &5342833014125283329 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: 400014, guid: c3798d66af7bbe54bbfe22a3b302300b, type: 3}
+  m_CorrespondingSourceObject: {fileID: 400014, guid: c3798d66af7bbe54bbfe22a3b302300b,
+    type: 3}
   m_PrefabInstance: {fileID: 5342833014125417103}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &6871378272464130637
@@ -494,11 +504,13 @@ PrefabInstance:
   m_SourcePrefab: {fileID: 100100000, guid: c3ba18e9fa5e9104098cbdbb3e23a5b4, type: 3}
 --- !u!1 &6871378272464032995 stripped
 GameObject:
-  m_CorrespondingSourceObject: {fileID: 100014, guid: c3ba18e9fa5e9104098cbdbb3e23a5b4, type: 3}
+  m_CorrespondingSourceObject: {fileID: 100014, guid: c3ba18e9fa5e9104098cbdbb3e23a5b4,
+    type: 3}
   m_PrefabInstance: {fileID: 6871378272464130637}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &6871378272463734979 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: 400014, guid: c3ba18e9fa5e9104098cbdbb3e23a5b4, type: 3}
+  m_CorrespondingSourceObject: {fileID: 400014, guid: c3ba18e9fa5e9104098cbdbb3e23a5b4,
+    type: 3}
   m_PrefabInstance: {fileID: 6871378272464130637}
   m_PrefabAsset: {fileID: 0}

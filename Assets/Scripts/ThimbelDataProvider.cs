@@ -1,200 +1,278 @@
-﻿using UnityEngine;
-using Microsoft.MixedReality.Toolkit;
-using Microsoft.MixedReality.Toolkit.Input;
-using Microsoft.MixedReality.Toolkit.Utilities;
-using System.Collections.Generic;
-using System;
-
-public class ThimbelDataProvider : InputSystemGlobalHandlerListener, IMixedRealityInputHandler
+﻿namespace Microsoft.MixedReality.Toolkit.Input
 {
+    using UnityEngine;
+    using Microsoft.MixedReality.Toolkit;
+    using Microsoft.MixedReality.Toolkit.Utilities;
+    using System.Collections.Generic;
+    using System;
 
-    [Header("MRTK Input Actions")]
-    [SerializeField] private MixedRealityInputAction outputAction;
-    public MixedRealityInputAction inputAction;
-
-    [SerializeField] private bool thimbelTouched = false;
-    private bool isActive = false;
-
-    public KeyCode[] btn = new KeyCode[] {KeyCode.JoystickButton0, KeyCode.JoystickButton1, KeyCode.JoystickButton2};
-
-    [Flags]public enum ActiveThimbel
-    {
-        thimbel0 = 1,
-        thimbel1 = 2,
-        thimbel2 = 4,
-        //thimbel0AndThimbel1 = thimbel0 | thimbel1
-    }
-    public ActiveThimbel activeThimbel;
-
-
-
-    private void Update()
+    public class ThimbelDataProvider : InputSystemGlobalHandlerListener, IMixedRealityInputHandler
     {
 
-        if (Input.GetKeyDown(KeyCode.Keypad0))
+        [Header("MRTK Input Actions")]
+        [SerializeField] private MixedRealityInputAction outputAction;
+        public MixedRealityInputAction inputAction;
+        public Handedness handedness;
+
+        //public InputSystemGlobalHandlerListener InputSystemGlobalHandlerListener;
+        public bool thimbelTouched = false;
+        public KeyCode[] btn = new KeyCode[] { KeyCode.JoystickButton0, KeyCode.JoystickButton1, KeyCode.JoystickButton2 };
+
+
+
+        [Flags]
+        public enum ActiveThimbel
         {
-            activeThimbel ^= ActiveThimbel.thimbel0;
+            thimbel0 = 1,
+            thimbel1 = 2,
+            thimbel2 = 4,
+            //thimbel0AndThimbel1 = thimbel0 | thimbel1
         }
+        public ActiveThimbel activeThimbel;
 
-        if (Input.GetKeyDown(KeyCode.Keypad1))
+        private void Update()
         {
-            activeThimbel ^= ActiveThimbel.thimbel1;
-        }
 
-        if (Input.GetKeyDown(KeyCode.Keypad2))
-        {
-            activeThimbel ^= ActiveThimbel.thimbel2;
-        }
+           
+            //var pointers = new HashSet<IMixedRealityPointer>();
 
-        if (Input.GetKeyDown(KeyCode.Keypad3))
-        {
-            activeThimbel ^= ActiveThimbel.thimbel0;
-            activeThimbel ^= ActiveThimbel.thimbel1;
-            activeThimbel ^= ActiveThimbel.thimbel2;
-        }
+            // Find all valid pointers
+            //foreach (var inputSource in CoreServices.InputSystem.DetectedInputSources)
+            //{
+            //    foreach (var pointer in inputSource.Pointers)
+            //    {
+            //        if (pointer.IsInteractionEnabled && !pointers.Contains(pointer))
+            //        {
+            //            pointers.Add(pointer);
+            //            Debug.Log("pointer: " + pointer);
+            //        }
+            //    }
+            //}
 
 
-        // Don´t get confused. (int)activeThimble displays the flag value. Check following Debug to understand.
-        //Debug.Log("activeThimbel: " + (int)activeThimbel);
-
-        if ((int)activeThimbel == 7 || (int)activeThimbel == -1)
-        {
-            if (Input.GetKey(btn[0]) || Input.GetKey(btn[1]) || Input.GetKey(btn[2]))
+            if (Input.GetKeyDown(KeyCode.Keypad0))
             {
-                ActivateButton(true);
-            }
-            else
-            {
-                ActivateButton(false);
+                activeThimbel ^= ActiveThimbel.thimbel0;
             }
 
-        }
-        else if ((int)activeThimbel == 3)
-        {
-            if (Input.GetKey(btn[0]) || Input.GetKey(btn[1]))
+            if (Input.GetKeyDown(KeyCode.Keypad1))
             {
-                ActivateButton(true);
-            }
-            else
-            {
-                ActivateButton(false);
+                activeThimbel ^= ActiveThimbel.thimbel1;
             }
 
-        }
-        else if ((int)activeThimbel == 6)
-        {
-            if (Input.GetKey(btn[1]) || Input.GetKey(btn[2]))
+            if (Input.GetKeyDown(KeyCode.Keypad2))
             {
-                ActivateButton(true);
-            }
-            else
-            {
-                ActivateButton(false);
+                activeThimbel ^= ActiveThimbel.thimbel2;
             }
 
-        }
-        else if ((int)activeThimbel == 5)
-        {
-            if (Input.GetKey(btn[0]) || Input.GetKey(btn[2]))
+            if (Input.GetKeyDown(KeyCode.Keypad3))
             {
-                ActivateButton(true);
-            }
-            else
-            {
-                ActivateButton(false);
+                activeThimbel ^= ActiveThimbel.thimbel0;
+                activeThimbel ^= ActiveThimbel.thimbel1;
+                activeThimbel ^= ActiveThimbel.thimbel2;
             }
 
-        }
-        else if ((int)activeThimbel == 1)
-        {
-            if (Input.GetKey(btn[0]))
+            if (Input.GetKeyDown(KeyCode.Keypad4))
             {
-                ActivateButton(true);
-            }
-            else
-            {
-                ActivateButton(false);
+                handedness ^= Handedness.Left;
+                
             }
 
-        }
-        else if ((int)activeThimbel == 2)
-        {
-            if (Input.GetKey(btn[1]))
+            if (Input.GetKeyDown(KeyCode.Keypad5))
             {
-                ActivateButton(true);
-            }
-            else
-            {
-                ActivateButton(false);
+                handedness ^= Handedness.Right;
             }
 
-        }
-        else if ((int)activeThimbel == 4)
-        {
-            if (Input.GetKey(btn[2]))
+            if (Input.GetKeyDown(KeyCode.Keypad6))
             {
-                ActivateButton(true);
+                handedness ^= Handedness.Both;
             }
-            else
+
+
+            if (handedness == Handedness.Right)
             {
-                ActivateButton(false);
+                SetHandRayEnabled(false, Handedness.Left);
+                SetHandRayEnabled(true, Handedness.Right);
             }
-        }
-        else
-        {
-            ActivateButton(false);
-        }
+            else if (handedness == Handedness.Left)
+            {
+                SetHandRayEnabled(true, Handedness.Left);
+                SetHandRayEnabled(false, Handedness.Right);
+            }
+            else if (handedness == Handedness.Both)
+            {
+                SetHandRayEnabled(true, Handedness.Both);
+            }
+            else if (handedness == Handedness.None)
+            {
+                SetHandRayEnabled(false, Handedness.Both);
+            }
 
 
 
-    }
+            // Don´t get confused. (int)activeThimble displays the flag value. Check following Debug to understand.
+            //Debug.Log("activeThimbel: " + (int)activeThimbel);
 
-    public void ActivateButton(bool isActive)
-    {
-        foreach (var controller in CoreServices.InputSystem.DetectedControllers)
-        {
-            if (controller.InputSource.SourceType == InputSourceType.Controller)
+            if ((int)activeThimbel == 7 || (int)activeThimbel == -1)
             {
-
-                if (isActive)
+                if (Input.GetKey(btn[0]) || Input.GetKey(btn[1]) || Input.GetKey(btn[2]))
                 {
-                    CoreServices.InputSystem?.RaiseOnInputDown(controller.InputSource, Handedness.Any, inputAction);
-                    Debug.Log("Input down with Thimbel Flag: " + (int)activeThimbel);
+                    ActivateButton(true);
                 }
                 else
                 {
-                    CoreServices.InputSystem?.RaiseOnInputUp(controller.InputSource, Handedness.Any, inputAction);
-                    //Debug.Log("RaiseOnInputUp");
+                    ActivateButton(false);
+                }
+
+            }
+            else if ((int)activeThimbel == 3)
+            {
+                if (Input.GetKey(btn[0]) || Input.GetKey(btn[1]))
+                {
+                    ActivateButton(true);
+                }
+                else
+                {
+                    ActivateButton(false);
+                }
+
+            }
+            else if ((int)activeThimbel == 6)
+            {
+                if (Input.GetKey(btn[1]) || Input.GetKey(btn[2]))
+                {
+                    ActivateButton(true);
+                }
+                else
+                {
+                    ActivateButton(false);
+                }
+
+            }
+            else if ((int)activeThimbel == 5)
+            {
+                if (Input.GetKey(btn[0]) || Input.GetKey(btn[2]))
+                {
+                    ActivateButton(true);
+                }
+                else
+                {
+                    ActivateButton(false);
+                }
+
+            }
+            else if ((int)activeThimbel == 1)
+            {
+                if (Input.GetKey(btn[0]))
+                {
+                    ActivateButton(true);
+                }
+                else
+                {
+                    ActivateButton(false);
+                }
+
+            }
+            else if ((int)activeThimbel == 2)
+            {
+                if (Input.GetKey(btn[1]))
+                {
+                    ActivateButton(true);
+                }
+                else
+                {
+                    ActivateButton(false);
+                }
+
+            }
+            else if ((int)activeThimbel == 4)
+            {
+                if (Input.GetKey(btn[2]))
+                {
+                    ActivateButton(true);
+                }
+                else
+                {
+                    ActivateButton(false);
+                }
+            }
+            else
+            {
+                ActivateButton(false);
+            }
+
+
+
+        }
+
+        public void ActivateButton(bool isActive)
+        {
+            foreach (var controller in CoreServices.InputSystem.DetectedControllers)
+            {
+                if (controller.InputSource.SourceType == InputSourceType.Controller)
+                {
+
+                    if (isActive)
+                    {
+                        CoreServices.InputSystem?.RaiseOnInputDown(controller.InputSource, Handedness.Any, inputAction);
+                        //Debug.Log("Input down with Thimbel Flag: " + (int)activeThimbel);
+                        //Debug.Log(controller.InputSource + " Handedness: " + handedness);
+
+                    }
+                    else
+                    {
+                        CoreServices.InputSystem?.RaiseOnInputUp(controller.InputSource, Handedness.Any, inputAction);
+                        //Debug.Log("RaiseOnInputUp");
+                    }
                 }
             }
         }
+
+        public void SetHandRayEnabled(bool isEnabled, Handedness handedness)
+        {
+            PointerUtils.SetHandRayPointerBehavior(isEnabled ? PointerBehavior.Default : PointerBehavior.AlwaysOff, handedness);
+            PointerUtils.SetHandGrabPointerBehavior(isEnabled ? PointerBehavior.Default : PointerBehavior.AlwaysOff, handedness);
+            PointerUtils.SetHandPokePointerBehavior(isEnabled ? PointerBehavior.Default : PointerBehavior.AlwaysOff, handedness);
+        }
+
+        #region On Input Up/Down
+        public void OnInputUp(InputEventData eventData)
+        {
+
+            if (eventData.MixedRealityInputAction == outputAction) thimbelTouched = false;
+        }
+
+        public void OnInputDown(InputEventData eventData)
+        {
+
+            if (eventData.MixedRealityInputAction == outputAction) thimbelTouched = true;
+            
+
+            if (eventData.InputSource.SourceType == InputSourceType.Controller)
+               {
+                    Debug.Log("Source: " + eventData.InputSource);
+                    Debug.Log("Handedness: " + eventData.Handedness);
+                    Debug.Log("SourceId: " + eventData.InputSource.SourceId);
+                    Debug.Log("SourceType: " + eventData.InputSource.SourceType);
+                    Debug.Log("MixedRealityInputAction: " + eventData.MixedRealityInputAction.Description);
+                    //Debug.Log("used: " + eventData.used);
+                    //Debug.Log("selectedObject: " + eventData.selectedObject);
+               }
+        }
+        #endregion
+
+        #region Handlers
+        protected override void RegisterHandlers()
+        {
+            CoreServices.InputSystem.RegisterHandler<IMixedRealityInputHandler>(this);
+        }
+
+        protected override void UnregisterHandlers()
+        {
+
+        }
+
+
+        #endregion
     }
-
-    #region On Input Up/Down
-    public void OnInputUp(InputEventData eventData)
-    {
-
-        if (eventData.MixedRealityInputAction == outputAction) thimbelTouched = false;
-    }
-
-    public void OnInputDown(InputEventData eventData)
-    {
-
-        if (eventData.MixedRealityInputAction == outputAction) thimbelTouched = true;
-    }
-    #endregion
-
-    #region Handlers
-    protected override void RegisterHandlers()
-    {
-        CoreServices.InputSystem.RegisterHandler<IMixedRealityInputHandler>(this);
-    }
-
-    protected override void UnregisterHandlers()
-    {
-
-    }
-
-  
-    #endregion
 }
