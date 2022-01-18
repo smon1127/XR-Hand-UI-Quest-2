@@ -17,7 +17,7 @@
         //public InputSystemGlobalHandlerListener InputSystemGlobalHandlerListener;
         public bool thimbelTouched = false;
         public KeyCode[] btn = new KeyCode[] { KeyCode.JoystickButton0, KeyCode.JoystickButton1, KeyCode.JoystickButton2 };
-
+        public bool debugMode = false;
 
 
         [Flags]
@@ -248,7 +248,7 @@
             if (eventData.MixedRealityInputAction == outputAction) thimbelTouched = true;
             
 
-            if (eventData.InputSource.SourceName == "GenericJoystickController Controller")
+            if (eventData.InputSource.SourceName == "GenericJoystickController Controller" || debugMode)
                {
                     
                     Debug.Log("Handedness: " + eventData.Handedness);

@@ -11,7 +11,9 @@ public class ThimbelIndexScroll : InputSystemGlobalHandlerListener, IMixedRealit
     Transform indexMiddleJoint = null;
     //Transform referenceObject;
     Transform leftThumbTip = null;
-    float rootPos = 0.0f;
+
+    [Range(-0.07f, 0.07f)]
+    public float rootPos = 0.0f;
 
     Vector3 prevPos = new Vector3(0,0,0);
 
@@ -20,9 +22,10 @@ public class ThimbelIndexScroll : InputSystemGlobalHandlerListener, IMixedRealit
     public Transform sliderKnob;
 
     public bool travelMode = false;
+    public bool resetRoot = false;
     bool isFirstTouch = true;
 
-    [Range(-0.07f, 0.07f)]
+    
     public float travaledDistance = 0f;
 
     [Range(0f, 2f)]
@@ -56,7 +59,6 @@ public class ThimbelIndexScroll : InputSystemGlobalHandlerListener, IMixedRealit
                 indexMiddleJoint = handJointService.RequestJointTransform(TrackedHandJoint.IndexMiddleJoint, Handedness.Left);
             }
         }
-        rootPos = travaledDistance;
     }
 
     // Update is called once per frame
@@ -85,6 +87,7 @@ public class ThimbelIndexScroll : InputSystemGlobalHandlerListener, IMixedRealit
     {
         if (travelMode)
         {
+            sliderUI.gameObject.SetActive(true);
             if (isFirstTouch)
             {
                 prevPos = leftThumbTip.transform.localPosition;
@@ -93,10 +96,14 @@ public class ThimbelIndexScroll : InputSystemGlobalHandlerListener, IMixedRealit
 
             
                 travaledDistance = Mathf.Lerp(prevPos.x, leftThumbTip.transform.localPosition.x, 1);
-            
+
 
             //Debug.Log("prevPos: " + prevPos.x + " thPos: " + leftThumbTip.transform.localPosition.x + " trDis: " + travaledDistance);
 
+        }
+        else
+        {
+            sliderUI.gameObject.SetActive(false);
         }
     }
 
@@ -104,7 +111,8 @@ public class ThimbelIndexScroll : InputSystemGlobalHandlerListener, IMixedRealit
     public void OnInputUp(InputEventData eventData)
     {
         isFirstTouch = true;
-        travaledDistance = rootPos;
+        
+        if(resetRoot) travaledDistance = rootPos;
         if (eventData.InputSource.SourceName == "GenericJoystickController Controller")
             travelMode = false;
 
