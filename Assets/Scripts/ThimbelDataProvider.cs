@@ -248,13 +248,14 @@
             if (eventData.MixedRealityInputAction == outputAction) thimbelTouched = true;
             
 
-            if (eventData.InputSource.SourceType == InputSourceType.Controller)
+            if (eventData.InputSource.SourceName == "GenericJoystickController Controller")
                {
-                    Debug.Log("Source: " + eventData.InputSource);
+                    
                     Debug.Log("Handedness: " + eventData.Handedness);
                     Debug.Log("SourceId: " + eventData.InputSource.SourceId);
+                    Debug.Log("SourceName: " + eventData.InputSource.SourceName);
                     Debug.Log("SourceType: " + eventData.InputSource.SourceType);
-                    Debug.Log("MixedRealityInputAction: " + eventData.MixedRealityInputAction.Description);
+                    Debug.Log("InputAction: " + eventData.MixedRealityInputAction.Description);
                     //Debug.Log("used: " + eventData.used);
                     //Debug.Log("selectedObject: " + eventData.selectedObject);
                }
